@@ -13,5 +13,15 @@ namespace Lab4_GridGame
             this.PosX = x;
             this.PosY = y;
         }
+        public void Color()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("@");
+            Console.ResetColor();
+        }
+        public Player()
+        {
+            Color();
+        }
     }
 }
