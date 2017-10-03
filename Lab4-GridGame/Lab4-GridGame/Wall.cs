@@ -13,5 +13,9 @@ namespace Lab4_GridGame
             this.PosX = x;
             this.PosY = y;
         }
+        public Wall()
+        {
+            Console.Write("#");
+        }
     }
 }
