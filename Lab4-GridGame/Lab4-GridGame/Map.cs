@@ -8,6 +8,12 @@ namespace Lab4_GridGame
 {
     public class Map
     {
+        public static int MaxPosX = 15;
+        public static int MaxPosY = 10;
+
+        public char PlayerIcon;
+
+        Block[,] MapGrid = new Block[MaxPosX, MaxPosY];
 
     }
 }
