@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    class Wall : Block
+    public class Wall : Block
     {
         public override void GetPos(int x, int y)
         {

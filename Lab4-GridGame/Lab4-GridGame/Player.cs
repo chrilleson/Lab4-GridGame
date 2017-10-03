@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    class Player : Block
+    class Player
     {
-        public override void GetPos(int x, int y)
-        {
-            this.PosX = x;
-            this.PosY = y;
-        }
+
     }
 }
