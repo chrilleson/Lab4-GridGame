@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
+    //Positions on every block.
     public abstract class Block
     {
         public int PosX { get; set; }
