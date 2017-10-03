@@ -10,6 +10,8 @@ namespace Lab4_GridGame
     {
         static void Main(string[] args)
         {
+            Map map = new Map();
+            map.GameRun();
         }
     }
 }

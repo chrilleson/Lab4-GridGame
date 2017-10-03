@@ -15,5 +15,11 @@ namespace Lab4_GridGame
 
         Block[,] MapGrid = new Block[MaxPosX, MaxPosY];
 
+        public void GameRun()
+        {
+            Console.WriteLine("Hello Game");
+            Console.ReadKey();
+        }
+
     }
 }
