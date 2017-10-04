@@ -6,8 +6,22 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    class Player
+    class Player : Block
     {
-
+        public override void GetPos(int x, int y)
+        {
+            this.PosX = x;
+            this.PosY = y;
+        }
+        public void Color()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("@");
+            Console.ResetColor();
+        }
+        public Player()
+        {
+            Color();
+        }
     }
 }
