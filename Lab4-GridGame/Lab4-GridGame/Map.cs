@@ -11,6 +11,9 @@ namespace Lab4_GridGame
         public static int MaxPosX = 10;
         public static int MaxPosY = 15;
 
+        public bool IsGameRunning;
+        public string Buffer = " ";
+
         public char PlayerIcon;
 
         Block[,] MapGrid = new Block[MaxPosX, MaxPosY];
@@ -26,45 +29,56 @@ namespace Lab4_GridGame
         public void RunGame()
         {
             player.GetPlayerPos(5, 7);
-
-            Console.Clear();
-
-            for (int y = 0; y < MapGrid.GetLength(0); y++)
+            
+            IsGameRunning = true;
+            while(IsGameRunning==true)
             {
-                for(int x = 0; x<MapGrid.GetLength(1); x++)
+                Console.Clear();
+
+                for (int x = 0; x < MapGrid.GetLength(0); x++)
                 {
-                    if (y == 0 || y == MapGrid.GetLength(0) - 1 || x == 0 || x == MapGrid.GetLength(1) - 1)
-                        MapGrid[y, x] = new Wall();
-                    else if (y == player.PosX && x == player.PosY)
+                    for (int y = 0; y < MapGrid.GetLength(1); y++)
                     {
-                        player.WritePlayer();
+                        if (x == 0 || x == MapGrid.GetLength(0) - 1 || y == 0 || y == MapGrid.GetLength(1) - 1)
+                            MapGrid[x, y] = new Wall();
+                        else if (x == player.PosX && y == player.PosY)
+                        {
+                            player.WritePlayer();
+                            //Console.Write(Buffer);
+                        }
+                        else
+                        {
+                            MapGrid[x, y] = new Floor();
+                            //Console.Write(Buffer);
+                        }
                     }
-                    else
-                        MapGrid[y, x] = new Floor();
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
-            }
 
-            var Input = Console.ReadKey();
-            PlayerIcon = (char)Input.Key;
+                var Input = Console.ReadKey();
+                PlayerIcon = (char)Input.Key;
 
-            switch (Input.Key)
-            {
+                switch (Input.Key)
+                {
 
-                case ConsoleKey.W:
-                    player.PosY--;
-                    break;
-                case ConsoleKey.A:
-                    player.PosX--;
-                    break;
-                case ConsoleKey.S:
-                    player.PosY++;
-                    break;
-                case ConsoleKey.D:
-                    player.PosX++;
-                    break;
-                default:
-                    break;
+                    case ConsoleKey.W:
+                        player.PosX--;
+                        break;
+                    case ConsoleKey.A:
+                        player.PosY--;
+                        break;
+                    case ConsoleKey.S:
+                        player.PosX++;
+                        break;
+                    case ConsoleKey.D:
+                        player.PosY++;
+                        break;
+                    case ConsoleKey.Escape:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
