@@ -6,24 +6,21 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    public class Player : IColorClass
+    public class Floor : Block, IColorClass
     {
-        public int PosX { get; set; }
-        public int PosY { get; set; }
-
-        public void GetPlayerPos(int x, int y)
+        public override void GetPos(int x, int y)
         {
             this.PosX = x;
             this.PosY = y;
         }
-
         public void Color()
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("@");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write('.');
             Console.ResetColor();
         }
-        public void WritePlayer()
+
+        public Floor()
         {
             Color();
         }
