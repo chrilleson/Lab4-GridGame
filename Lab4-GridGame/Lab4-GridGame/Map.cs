@@ -77,15 +77,15 @@ namespace Lab4_GridGame
                         {
                             MapGrid[y, x] = new Key();
                         }
-                        else if (y == 3 && x == 1)
+                        else if (y == 3 && x == 1 && door1.DoorOpen == false)
                         {
                             MapGrid[y, x] = new Door();
                         }
-                        else if (y == 9 && x == 4)
+                        else if (y == 9 && x == 4 && door2.DoorOpen == false)
                         {
                             MapGrid[y, x] = new Door();
                         }
-                        else if (y == 3 && x == 12)
+                        else if (y == 3 && x == 12 && door3.DoorOpen == false)
                         {
                             MapGrid[y, x] = new Door();
                         }
@@ -208,6 +208,17 @@ namespace Lab4_GridGame
             }
             else
                 return false;
+        }
+        // If you're walking in a monster room.
+        public void InsideMonsterRoom()
+        {
+            if ((MapGrid[player.PosY, player.PosX] is Monster && InputKey == "W") ||
+                (MapGrid[player.PosY, player.PosX] is Monster && InputKey == "D") ||
+                (MapGrid[player.PosY, player.PosX] is Monster && InputKey == "A") ||
+                (MapGrid[player.PosY, player.PosX] is Monster && InputKey == "S"))
+            {
+                player.NumberOfTurns += 35;
+            }
         }
 
 
