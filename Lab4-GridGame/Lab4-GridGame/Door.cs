@@ -8,6 +8,8 @@ namespace Lab4_GridGame
 {
     class Door : Block
     {
+        public bool DoorOpen { get; set; }
+
         public override void GetPos(int x, int y)
         {
             this.PosY = y;
@@ -18,6 +20,11 @@ namespace Lab4_GridGame
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("D");
             Console.ResetColor();
+        }
+
+        public Door()
+        {
+            Color();
         }
     }
 }

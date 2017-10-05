@@ -8,6 +8,8 @@ namespace Lab4_GridGame
 {
     class Key : Block
     {
+        public bool PickedUpKey { get; set; }
+
         public override void GetPos(int x, int y)
         {
             this.PosX = x;
