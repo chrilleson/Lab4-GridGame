@@ -136,7 +136,7 @@ namespace Lab4_GridGame
         }
         private bool NextStep;
 
-        //To be able to open door if you have a key
+        //To be able to open door
         public bool DoorIsOpen()
         {
             if (player.HaveKey)
