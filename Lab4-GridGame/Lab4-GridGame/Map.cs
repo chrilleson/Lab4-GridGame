@@ -9,8 +9,8 @@ namespace Lab4_GridGame
     public class Map
     {
         //The max positions of the map
-        public static int MaxPosX = 10;
-        public static int MaxPosY = 20;
+        public static int MaxPosX = 20;
+        public static int MaxPosY = 10;
 
         public bool IsGameRunning;
         public string Buffer = " ";
@@ -18,7 +18,7 @@ namespace Lab4_GridGame
         public char NextPlayerStep;
 
         //Creates game objects and the player
-        Block[,] MapGrid = new Block[MaxPosX, MaxPosY];
+        Block[,] MapGrid = new Block[MaxPosY, MaxPosX];
         public Player player = new Player();
         Key key1 = new Key();
         Key key2 = new Key();
@@ -55,48 +55,47 @@ namespace Lab4_GridGame
             while(IsGameRunning==true)
             {
                 Console.Clear();
-                Console.Write("Steps: " + player.NumberOfTurns);
-                Console.WriteLine();
+
                 //Puts all of the diffrent blocks in the map
-                for (int y = 0; y < MapGrid.GetLength(0); y++)
+                for (int x = 0; x < MapGrid.GetLength(0); x++)
                 {
-                    for (int x = 0; x < MapGrid.GetLength(1); x++)
+                    for (int y = 0; y < MapGrid.GetLength(1); y++)
                     {
-                        if (y == 0 || y == MapGrid.GetLength(0) - 1 || x == 0 || x == MapGrid.GetLength(1) - 1
-                            || y < 4 && x == 8 || y == 3 && x == 8 || y == 3 && x == 9 || y == 3 && x == 10
-                            || y == 3 && x == 11 || y == 3 && x >= 13)
-                            MapGrid[y, x] = new Wall();
-                        else if (y == 2 && x == 4)
+                        if (x == 0 || x == MapGrid.GetLength(0) - 1 || y == 0 || y == MapGrid.GetLength(1) - 1
+                            || x < 4 && y == 8 || x == 3 && y == 8 || x == 3 && y == 9 || x == 3 && y == 10
+                            || x == 3 && y == 11 || x == 3 && y >= 13)
+                            MapGrid[x, y] = new Wall();
+                        else if (x == 2 && y == 4)
                         {
-                            MapGrid[y, x] = new Key();
+                            MapGrid[x, y] = new Key();
                         }
-                        else if (y == 9 && x == 13)
+                        else if (x == 9 && y == 13)
                         {
-                            MapGrid[y, x] = new Key();
+                            MapGrid[x, y] = new Key();
                         }
-                        else if (y == 5 && x == 13)
+                        else if (x == 5 && y == 13)
                         {
-                            MapGrid[y, x] = new Key();
+                            MapGrid[x, y] = new Key();
                         }
-                        else if (y == 3 && x == 1 && door1.DoorOpen == false)
+                        else if (x == 3 && y == 1)
                         {
-                            MapGrid[y, x] = new Door();
+                            MapGrid[x, y] = new Door();
                         }
-                        else if (y == 9 && x == 4 && door2.DoorOpen == false)
+                        else if (x == 9 && y == 4)
                         {
-                            MapGrid[y, x] = new Door();
+                            MapGrid[x, y] = new Door();
                         }
-                        else if (y == 3 && x == 12 && door3.DoorOpen == false)
+                        else if (x == 3 && y == 12)
                         {
-                            MapGrid[y, x] = new Door();
+                            MapGrid[x, y] = new Door();
                         }
-                        else if (y == player.PosX && x == player.PosY)
+                        else if (x == player.PosX && y == player.PosY)
                         {
                             player.WritePlayer();
                         }
                         else
                         {
-                            MapGrid[y, x] = new Floor();
+                            MapGrid[x, y] = new Floor();
                         }
                     }
                     Console.WriteLine();
@@ -106,24 +105,31 @@ namespace Lab4_GridGame
                 var Input = Console.ReadKey();
                 NextPlayerStep = (char)Input.Key;
 
-
                 switch (Input.Key)
                 {
                     case ConsoleKey.W:
-                        player.PosX--;
-                        player.NumberOfTurns++;
+                        if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
+                            break;
+                        else
+                            player.PosX--;
                         break;
                     case ConsoleKey.A:
-                        player.PosY--;
-                        player.NumberOfTurns++;
+                        if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
+                            break;
+                        else
+                            player.PosY--;
                         break;
                     case ConsoleKey.S:
-                        player.PosX++;
-                        player.NumberOfTurns++;
+                        if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
+                            break;
+                        else
+                            player.PosX++;
                         break;
                     case ConsoleKey.D:
+                        if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
+                            break;
+                        else
                         player.PosY++;
-                        player.NumberOfTurns++;
                         break;
                     case ConsoleKey.Escape:
                         Environment.Exit(0);
@@ -132,45 +138,15 @@ namespace Lab4_GridGame
                         break;
                 }
             }
-            
         }
-        private bool NextStep;
-
-        //To be able to open door
-        public bool DoorIsOpen()
+        private bool NextStep(int x, int y, char InputKey)
         {
-            if (player.HaveKey)
+            if (MapGrid[player.PosY -1, player.PosX] is Wall && InputKey == 'W' || MapGrid[player.PosY + 1, player.PosX] is Wall && InputKey == 'S'||MapGrid[player.PosY, player.PosX + 1] is Wall && InputKey == 'D' || MapGrid[player.PosY, player.PosX - 1] is Wall && InputKey == 'A')
             {
-                if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door1.PosY, door1.PosX])
-                {
-                    door1.DoorOpen = true;
-                }
-                else if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door2.PosY, door2.PosX])
-                {
-                    door2.DoorOpen = true;
-                }
-                else if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door3.PosY, door3.PosX])
-                {
-                    door3.DoorOpen = true;
-                }
-                player.NumberOfKey--;
-                player.NumberOfTurns++;
-                return true;
+                return false;
             }
             else
-                return false;
+                return true;
         }
 
     }
