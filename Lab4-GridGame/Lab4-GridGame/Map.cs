@@ -241,10 +241,10 @@ namespace Lab4_GridGame
         // If you're walking in a monster room.
         public void InsideMonsterRoom()
         {
-            if ((MapGrid[player.PosY, player.PosX] is Monster && InputKey == "W") ||
-                (MapGrid[player.PosY, player.PosX] is Monster && InputKey == "D") ||
-                (MapGrid[player.PosY, player.PosX] is Monster && InputKey == "A") ||
-                (MapGrid[player.PosY, player.PosX] is Monster && InputKey == "S"))
+            if ((MapGrid[player.PosY, player.PosX] is Monster && NextPlayerStep == 'W') ||
+                (MapGrid[player.PosY, player.PosX] is Monster && NextPlayerStep == 'D') ||
+                (MapGrid[player.PosY, player.PosX] is Monster && NextPlayerStep == 'A') ||
+                (MapGrid[player.PosY, player.PosX] is Monster && NextPlayerStep == 'S'))
             {
                 player.NumberOfTurns += 35;
             }
