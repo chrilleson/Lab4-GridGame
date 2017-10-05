@@ -14,7 +14,7 @@ namespace Lab4_GridGame
 
         public bool IsGameRunning;
         public string Buffer = " ";
-        
+
         public char NextPlayerStep;
 
         //Creates game objects and the player
@@ -27,7 +27,7 @@ namespace Lab4_GridGame
         Door door2 = new Door();
         Door door3 = new Door();
         Exit exit = new Exit();
-        
+
         //Function to run the game
         public void RunGame()
         {
@@ -52,7 +52,7 @@ namespace Lab4_GridGame
             door3.GetPos(3, 12);
             //Updating the map loop
             IsGameRunning = true;
-            while(IsGameRunning==true)
+            while (IsGameRunning == true)
             {
                 Console.Clear();
 
@@ -129,7 +129,7 @@ namespace Lab4_GridGame
                         if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
                             break;
                         else
-                        player.PosY++;
+                            player.PosY++;
                         break;
                     case ConsoleKey.Escape:
                         Environment.Exit(0);
@@ -138,45 +138,74 @@ namespace Lab4_GridGame
                         break;
                 }
             }
-            
+
         }
-        private bool NextStep;
+        private bool NextStep(int x, int y, char InputKey)
+        {
+            Block nextBlock = null;
+            switch (InputKey)
+            {
+                case 'W':
+                    nextBlock = MapGrid[player.PosY - 1, player.PosX];
+                    break;
+                case 'A':
+                    nextBlock = MapGrid[player.PosY, player.PosX - 1];
+                    break;
+                case 'S':
+                    nextBlock = MapGrid[player.PosY + 1, player.PosX];
+                    break;
+                case 'D':
+                    nextBlock = MapGrid[player.PosY, player.PosX + 1];
+                    break;
+                default:
+                    break;
+
+            }
+            if (nextBlock is Wall)
+            {
+                return false;
+            }
+            else if(nextBlock is Door)
+            {
+                if (DoorIsOpen())
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return true;
+        }
 
         //To be able to open door if you have a key
         public bool DoorIsOpen()
         {
-            if (MapGrid[player.PosY -1, player.PosX] is Wall && InputKey == 'W' || MapGrid[player.PosY + 1, player.PosX] is Wall && InputKey == 'S'||MapGrid[player.PosY, player.PosX + 1] is Wall && InputKey == 'D' || MapGrid[player.PosY, player.PosX - 1] is Wall && InputKey == 'A')
+            if
+                (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
+                 MapGrid[player.PosY + 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
+                 MapGrid[player.PosY, player.PosX - 1] == MapGrid[door1.PosY, door1.PosX] ||
+                 MapGrid[player.PosY, player.PosX + 1] == MapGrid[door1.PosY, door1.PosX])
             {
-                if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door1.PosY, door1.PosX])
-                {
-                    door1.DoorOpen = true;
-                }
-                else if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door2.PosY, door2.PosX])
-                {
-                    door2.DoorOpen = true;
-                }
-                else if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door3.PosY, door3.PosX])
-                {
-                    door3.DoorOpen = true;
-                }
-                player.NumberOfKey--;
-                player.NumberOfTurns++;
-                return true;
+                door1.DoorOpen = true;
             }
-            else
-                return false;
+            else if
+                (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
+                 MapGrid[player.PosY + 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
+                 MapGrid[player.PosY, player.PosX - 1] == MapGrid[door2.PosY, door2.PosX] ||
+                 MapGrid[player.PosY, player.PosX + 1] == MapGrid[door2.PosY, door2.PosX])
+            {
+                door2.DoorOpen = true;
+            }
+            else if
+                (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
+                 MapGrid[player.PosY + 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
+                 MapGrid[player.PosY, player.PosX - 1] == MapGrid[door3.PosY, door3.PosX] ||
+                 MapGrid[player.PosY, player.PosX + 1] == MapGrid[door3.PosY, door3.PosX])
+            {
+                door3.DoorOpen = true;
+            }
+            player.NumberOfKey--;
+            player.NumberOfTurns++;
+            return true;
         }
 
         //To be able to pick up keys
