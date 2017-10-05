@@ -55,7 +55,8 @@ namespace Lab4_GridGame
             while(IsGameRunning==true)
             {
                 Console.Clear();
-
+                Console.Write("Steps: " + player.NumberOfTurns);
+                Console.WriteLine();
                 //Puts all of the diffrent blocks in the map
                 for (int y = 0; y < MapGrid.GetLength(0); y++)
                 {
@@ -77,15 +78,15 @@ namespace Lab4_GridGame
                         {
                             MapGrid[y, x] = new Key();
                         }
-                        else if (y == 3 && x == 1)
+                        else if (y == 3 && x == 1 && door1.DoorOpen == false)
                         {
                             MapGrid[y, x] = new Door();
                         }
-                        else if (y == 9 && x == 4)
+                        else if (y == 9 && x == 4 && door2.DoorOpen == false)
                         {
                             MapGrid[y, x] = new Door();
                         }
-                        else if (y == 3 && x == 12)
+                        else if (y == 3 && x == 12 && door3.DoorOpen == false)
                         {
                             MapGrid[y, x] = new Door();
                         }
@@ -105,19 +106,24 @@ namespace Lab4_GridGame
                 var Input = Console.ReadKey();
                 NextPlayerStep = (char)Input.Key;
 
+
                 switch (Input.Key)
                 {
                     case ConsoleKey.W:
                         player.PosX--;
+                        player.NumberOfTurns++;
                         break;
                     case ConsoleKey.A:
                         player.PosY--;
+                        player.NumberOfTurns++;
                         break;
                     case ConsoleKey.S:
                         player.PosX++;
+                        player.NumberOfTurns++;
                         break;
                     case ConsoleKey.D:
                         player.PosY++;
+                        player.NumberOfTurns++;
                         break;
                     case ConsoleKey.Escape:
                         Environment.Exit(0);
@@ -126,8 +132,46 @@ namespace Lab4_GridGame
                         break;
                 }
             }
+            
         }
         private bool NextStep;
+
+        //To be able to open door if you have a key
+        public bool DoorIsOpen()
+        {
+            if (player.HaveKey)
+            {
+                if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door1.PosY, door1.PosX])
+                {
+                    door1.DoorOpen = true;
+                }
+                else if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door2.PosY, door2.PosX])
+                {
+                    door2.DoorOpen = true;
+                }
+                else if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door3.PosY, door3.PosX])
+                {
+                    door3.DoorOpen = true;
+                }
+                player.NumberOfKey--;
+                player.NumberOfTurns++;
+                return true;
+            }
+            else
+                return false;
+        }
 
     }
 }
