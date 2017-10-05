@@ -57,45 +57,45 @@ namespace Lab4_GridGame
                 Console.Clear();
 
                 //Puts all of the diffrent blocks in the map
-                for (int x = 0; x < MapGrid.GetLength(0); x++)
+                for (int y = 0; y < MapGrid.GetLength(0); y++)
                 {
-                    for (int y = 0; y < MapGrid.GetLength(1); y++)
+                    for (int x = 0; x < MapGrid.GetLength(1); x++)
                     {
-                        if (x == 0 || x == MapGrid.GetLength(0) - 1 || y == 0 || y == MapGrid.GetLength(1) - 1
-                            || x < 4 && y == 8 || x == 3 && y == 8 || x == 3 && y == 9 || x == 3 && y == 10
-                            || x == 3 && y == 11 || x == 3 && y >= 13)
-                            MapGrid[x, y] = new Wall();
-                        else if (x == 2 && y == 4)
+                        if (y == 0 || y == MapGrid.GetLength(0) - 1 || x == 0 || x == MapGrid.GetLength(1) - 1
+                            || y < 4 && x == 8 || y == 3 && x == 8 || y == 3 && x == 9 || y == 3 && x == 10
+                            || y == 3 && x == 11 || y == 3 && x >= 13)
+                            MapGrid[y, x] = new Wall();
+                        else if (y == 2 && x == 4)
                         {
-                            MapGrid[x, y] = new Key();
+                            MapGrid[y, x] = new Key();
                         }
-                        else if (x == 9 && y == 13)
+                        else if (y == 9 && x == 13)
                         {
-                            MapGrid[x, y] = new Key();
+                            MapGrid[y, x] = new Key();
                         }
-                        else if (x == 5 && y == 13)
+                        else if (y == 5 && x == 13)
                         {
-                            MapGrid[x, y] = new Key();
+                            MapGrid[y, x] = new Key();
                         }
-                        else if (x == 3 && y == 1)
+                        else if (y == 3 && x == 1)
                         {
-                            MapGrid[x, y] = new Door();
+                            MapGrid[y, x] = new Door();
                         }
-                        else if (x == 9 && y == 4)
+                        else if (y == 9 && x == 4)
                         {
-                            MapGrid[x, y] = new Door();
+                            MapGrid[y, x] = new Door();
                         }
-                        else if (x == 3 && y == 12)
+                        else if (y == 3 && x == 12)
                         {
-                            MapGrid[x, y] = new Door();
+                            MapGrid[y, x] = new Door();
                         }
-                        else if (x == player.PosX && y == player.PosY)
+                        else if (y == player.PosX && x == player.PosY)
                         {
                             player.WritePlayer();
                         }
                         else
                         {
-                            MapGrid[x, y] = new Floor();
+                            MapGrid[y, x] = new Floor();
                         }
                     }
                     Console.WriteLine();
@@ -138,78 +138,35 @@ namespace Lab4_GridGame
                         break;
                 }
             }
-            
         }
-        private bool NextStep;
-
-        //To be able to open door if you have a key
-        public bool DoorIsOpen()
+        private bool NextStep(int x, int y, char InputKey)
         {
-            if (player.HaveKey)
+            Block nextBlock = null;
+            switch(InputKey)
             {
-                if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door1.PosY, door1.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door1.PosY, door1.PosX])
-                {
-                    door1.DoorOpen = true;
-                }
-                else if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door2.PosY, door2.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door2.PosY, door2.PosX])
-                {
-                    door2.DoorOpen = true;
-                }
-                else if
-                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door3.PosY, door3.PosX] ||
-                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door3.PosY, door3.PosX])
-                {
-                    door3.DoorOpen = true;
-                }
-                player.NumberOfKey--;
-                player.NumberOfTurns++;
-                return true;
+                case 'W':
+                    nextBlock = MapGrid[player.PosY - 1, player.PosX];
+                    break;
+                case 'A':
+                    nextBlock = MapGrid[player.PosY, player.PosX - 1];
+                    break;
+                case 'S':
+                    nextBlock = MapGrid[player.PosY + 1, player.PosX];
+                    break;
+                case 'D':
+                    nextBlock = MapGrid[player.PosY, player.PosX + 1];
+                    break;
+                default:
+                    break;
+                
+            }
+            if (nextBlock is Wall)
+            {
+                return false;
             }
             else
-                return false;
+                return true;
         }
-
-        //To be able to pick up keys
-        public bool KeyIsPickedUp()
-        {
-            if (MapGrid[player.PosY, player.PosX] == MapGrid[key1.PosY, key1.PosX] && key1.PickedUpKey == false)
-            {
-                key1.PickedUpKey = true;
-                player.HaveKey = true;
-                player.NumberOfKey++;
-                player.NumberOfTurns++;
-                return true;
-            }
-            else if (MapGrid[player.PosY, player.PosX] == MapGrid[key2.PosY, key2.PosX] && key2.PickedUpKey == false)
-            {
-                key2.PickedUpKey = true;
-                player.HaveKey = true;
-                player.NumberOfKey++;
-                player.NumberOfTurns++;
-                return true;
-            }
-            else if (MapGrid[player.PosY, player.PosX] == MapGrid[key3.PosY, key3.PosX] && key3.PickedUpKey == false)
-            {
-                key3.PickedUpKey = true;
-                player.HaveKey = true;
-                player.NumberOfKey++;
-                player.NumberOfTurns++;
-                return true;
-            }
-            else
-                return false;
-        }
-
 
     }
 }
