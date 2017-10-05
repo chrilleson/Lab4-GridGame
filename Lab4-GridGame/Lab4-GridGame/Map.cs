@@ -138,12 +138,42 @@ namespace Lab4_GridGame
                         break;
                 }
             }
+            
         }
-        private bool NextStep(int x, int y, char InputKey)
+        private bool NextStep;
+
+        //To be able to open door if you have a key
+        public bool DoorIsOpen()
         {
-            if (MapGrid[player.PosY -1, player.PosX] is Wall && InputKey == 'W' || MapGrid[player.PosY + 1, player.PosX] is Wall && InputKey == 'S'||MapGrid[player.PosY, player.PosX + 1] is Wall && InputKey == 'D' || MapGrid[player.PosY, player.PosX - 1] is Wall && InputKey == 'A')
+            if (player.HaveKey)
             {
-                return false;
+                if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door1.PosY, door1.PosX])
+                {
+                    door1.DoorOpen = true;
+                }
+                else if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door2.PosY, door2.PosX])
+                {
+                    door2.DoorOpen = true;
+                }
+                else if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door3.PosY, door3.PosX])
+                {
+                    door3.DoorOpen = true;
+                }
+                player.NumberOfKey--;
+                player.NumberOfTurns++;
+                return true;
             }
             else
                 return true;
