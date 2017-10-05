@@ -138,35 +138,78 @@ namespace Lab4_GridGame
                         break;
                 }
             }
+            
         }
-        private bool NextStep(int x, int y, char InputKey)
+        private bool NextStep;
+
+        //To be able to open door if you have a key
+        public bool DoorIsOpen()
         {
-            Block nextBlock = null;
-            switch(InputKey)
+            if (MapGrid[player.PosY -1, player.PosX] is Wall && InputKey == 'W' || MapGrid[player.PosY + 1, player.PosX] is Wall && InputKey == 'S'||MapGrid[player.PosY, player.PosX + 1] is Wall && InputKey == 'D' || MapGrid[player.PosY, player.PosX - 1] is Wall && InputKey == 'A')
             {
-                case 'W':
-                    nextBlock = MapGrid[player.PosY - 1, player.PosX];
-                    break;
-                case 'A':
-                    nextBlock = MapGrid[player.PosY, player.PosX - 1];
-                    break;
-                case 'S':
-                    nextBlock = MapGrid[player.PosY + 1, player.PosX];
-                    break;
-                case 'D':
-                    nextBlock = MapGrid[player.PosY, player.PosX + 1];
-                    break;
-                default:
-                    break;
-                
-            }
-            if (nextBlock is Wall)
-            {
-                return false;
+                if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door1.PosY, door1.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door1.PosY, door1.PosX])
+                {
+                    door1.DoorOpen = true;
+                }
+                else if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door2.PosY, door2.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door2.PosY, door2.PosX])
+                {
+                    door2.DoorOpen = true;
+                }
+                else if
+                    (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY + 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY, player.PosX - 1] == MapGrid[door3.PosY, door3.PosX] ||
+                     MapGrid[player.PosY, player.PosX + 1] == MapGrid[door3.PosY, door3.PosX])
+                {
+                    door3.DoorOpen = true;
+                }
+                player.NumberOfKey--;
+                player.NumberOfTurns++;
+                return true;
             }
             else
-                return true;
+                return false;
         }
+
+        //To be able to pick up keys
+        public bool KeyIsPickedUp()
+        {
+            if (MapGrid[player.PosY, player.PosX] == MapGrid[key1.PosY, key1.PosX] && key1.PickedUpKey == false)
+            {
+                key1.PickedUpKey = true;
+                player.HaveKey = true;
+                player.NumberOfKey++;
+                player.NumberOfTurns++;
+                return true;
+            }
+            else if (MapGrid[player.PosY, player.PosX] == MapGrid[key2.PosY, key2.PosX] && key2.PickedUpKey == false)
+            {
+                key2.PickedUpKey = true;
+                player.HaveKey = true;
+                player.NumberOfKey++;
+                player.NumberOfTurns++;
+                return true;
+            }
+            else if (MapGrid[player.PosY, player.PosX] == MapGrid[key3.PosY, key3.PosX] && key3.PickedUpKey == false)
+            {
+                key3.PickedUpKey = true;
+                player.HaveKey = true;
+                player.NumberOfKey++;
+                player.NumberOfTurns++;
+                return true;
+            }
+            else
+                return false;
+        }
+
 
     }
 }
