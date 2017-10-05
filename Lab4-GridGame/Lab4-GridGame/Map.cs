@@ -99,7 +99,9 @@ namespace Lab4_GridGame
                     }
                     Console.WriteLine();
                 }
-
+                Console.Write($"you have taken: {player.NumberOfTurns} steps");
+                Console.Write($"\nYou have: {player.NumberOfKey} keys.");
+                Console.WriteLine();
                 //Switch to check if the player have pressed W, A, S, D, or Escape. Also checks if the player can move there
                 var Input = Console.ReadKey();
                 NextPlayerStep = (char)Input.Key;
@@ -110,25 +112,37 @@ namespace Lab4_GridGame
                         if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
                             break;
                         else
+                        {
                             player.PosX--;
+                            player.NumberOfTurns++;
+                        }
                         break;
                     case ConsoleKey.A:
                         if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
                             break;
                         else
+                        {
                             player.PosY--;
+                            player.NumberOfTurns++;
+                        }
                         break;
                     case ConsoleKey.S:
                         if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
                             break;
                         else
+                        {
                             player.PosX++;
+                            player.NumberOfTurns++;
+                        }
                         break;
                     case ConsoleKey.D:
                         if (NextStep(player.PosX, player.PosY, NextPlayerStep) == false)
                             break;
                         else
+                        {
                             player.PosY++;
+                            player.NumberOfTurns++;
+                        }
                         break;
                     case ConsoleKey.Escape:
                         Environment.Exit(0);
