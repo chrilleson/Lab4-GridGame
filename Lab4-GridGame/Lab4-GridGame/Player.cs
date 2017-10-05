@@ -9,8 +9,8 @@ namespace Lab4_GridGame
     public class Player : IColorClass
     {
         //Player positions
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+        public int PosCol { get; set; }
+        public int PosRow { get; set; }
 
         //check if the player have keys
         public bool HaveKey { get; set; }
@@ -19,13 +19,13 @@ namespace Lab4_GridGame
         //counts the number of steps that the player have taken
         public int NumberOfTurns { get; set; }
 
-        public void GetPlayerPos(int x, int y)
+        public void SetPlayerPos(int x, int y)
         {
-            this.PosX = x;
-            this.PosY = y;
+            this.PosCol = x;
+            this.PosRow = y;
         }
 
-        public void Color()
+        public void Print()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("@");
@@ -33,7 +33,7 @@ namespace Lab4_GridGame
         }
         public void WritePlayer()
         {
-            Color();
+            Print();
         }
     }
 }

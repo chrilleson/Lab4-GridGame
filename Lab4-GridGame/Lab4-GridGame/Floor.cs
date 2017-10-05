@@ -13,7 +13,7 @@ namespace Lab4_GridGame
             this.PosX = x;
             this.PosY = y;
         }
-        public void Color()
+        public override void Print()
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write('.');
@@ -22,7 +22,6 @@ namespace Lab4_GridGame
 
         public Floor()
         {
-            Color();
         }
     }
 }

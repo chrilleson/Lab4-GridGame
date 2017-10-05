@@ -15,7 +15,7 @@ namespace Lab4_GridGame
             this.PosX = x;
             this.PosY = y;
         }
-        public void Color()
+        public override void Print()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("K");
@@ -23,7 +23,6 @@ namespace Lab4_GridGame
         }
         public Key()
         {
-            Color();
         }
     }
 }

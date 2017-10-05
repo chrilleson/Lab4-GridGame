@@ -15,7 +15,7 @@ namespace Lab4_GridGame
             this.PosY = y;
             this.PosX = x;
         }
-        public void Color()
+        public override void Print()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("D");
@@ -24,7 +24,6 @@ namespace Lab4_GridGame
 
         public Door()
         {
-            Color();
         }
     }
 }

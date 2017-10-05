@@ -9,6 +9,6 @@ namespace Lab4_GridGame
     //Gives color to the output.
     interface IColorClass
     {
-        void Color();
+        void Print();
     }
 }
