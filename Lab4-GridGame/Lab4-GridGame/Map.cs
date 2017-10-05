@@ -176,8 +176,40 @@ namespace Lab4_GridGame
                 return true;
             }
             else
-                return true;
+                return false;
         }
+
+        //To be able to pick up keys
+        public bool KeyIsPickedUp()
+        {
+            if (MapGrid[player.PosY, player.PosX] == MapGrid[key1.PosY, key1.PosX] && key1.PickedUpKey == false)
+            {
+                key1.PickedUpKey = true;
+                player.HaveKey = true;
+                player.NumberOfKey++;
+                player.NumberOfTurns++;
+                return true;
+            }
+            else if (MapGrid[player.PosY, player.PosX] == MapGrid[key2.PosY, key2.PosX] && key2.PickedUpKey == false)
+            {
+                key2.PickedUpKey = true;
+                player.HaveKey = true;
+                player.NumberOfKey++;
+                player.NumberOfTurns++;
+                return true;
+            }
+            else if (MapGrid[player.PosY, player.PosX] == MapGrid[key3.PosY, key3.PosX] && key3.PickedUpKey == false)
+            {
+                key3.PickedUpKey = true;
+                player.HaveKey = true;
+                player.NumberOfKey++;
+                player.NumberOfTurns++;
+                return true;
+            }
+            else
+                return false;
+        }
+
 
     }
 }
