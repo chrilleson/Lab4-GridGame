@@ -13,7 +13,6 @@ namespace Lab4_GridGame
         public static int MaxPosY = 10;
 
         public bool IsGameRunning;
-        public string Buffer = " ";
 
         public char NextPlayerStep;
 
@@ -164,14 +163,14 @@ namespace Lab4_GridGame
             if (nextBlock is Wall)
             {
                 return false;
-            }
+            }/*
             else if(nextBlock is Door)
             {
                 if (DoorIsOpen())
                     return true;
                 else
                     return false;
-            }
+            }*/
             else
                 return true;
         }
