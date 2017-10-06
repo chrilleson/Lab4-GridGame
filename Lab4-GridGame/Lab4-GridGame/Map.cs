@@ -117,7 +117,7 @@ namespace Lab4_GridGame
                         else
                             player.PosCol--;
                             player.NumberOfTurns++;
-                        }
+                        
                         break;
                     case ConsoleKey.A:
                         if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
@@ -125,7 +125,7 @@ namespace Lab4_GridGame
                         else
                             player.PosRow--;
                             player.NumberOfTurns++;
-                        }
+                        
                         break;
                     case ConsoleKey.S:
                         if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
@@ -133,7 +133,7 @@ namespace Lab4_GridGame
                         else
                             player.PosCol++;
                             player.NumberOfTurns++;
-                        }
+                        
                         break;
                     case ConsoleKey.D:
                         if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
@@ -141,7 +141,7 @@ namespace Lab4_GridGame
                         else
                             player.PosRow++;
                             player.NumberOfTurns++;
-                        }
+                        
                         break;
                     case ConsoleKey.Escape:
                         Environment.Exit(0);
