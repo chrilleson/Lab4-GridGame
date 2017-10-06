@@ -12,8 +12,6 @@ namespace Lab4_GridGame
         public int PosX { get; set; }
         public int PosY { get; set; }
 
-        public abstract void Print();
-
         public abstract void GetPos(int x, int y);
     }
 }

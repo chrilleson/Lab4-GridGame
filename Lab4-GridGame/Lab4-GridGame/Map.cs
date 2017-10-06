@@ -19,13 +19,13 @@ namespace Lab4_GridGame
         //Creates game objects and the player
         Block[,] MapGrid = new Block[MaxPosRow, MaxPosCol];
         public Player player = new Player();
-        Key key1 = new Key();
-        Key key2 = new Key();
-        Key key3 = new Key();
-        Door door1 = new Door();
-        Door door2 = new Door();
-        Door door3 = new Door();
-        Exit exit = new Exit();
+        private Key key1 = new Key();
+        private Key key2 = new Key();
+        private Key key3 = new Key();
+        private Door door1 = new Door();
+        private Door door2 = new Door();
+        private Door door3 = new Door();
+        private Exit exit = new Exit();
 
         //Function to run the game
         public void RunGame()
@@ -51,12 +51,9 @@ namespace Lab4_GridGame
             door3.GetPos(3, 12);
             //Updating the map loop
             IsGameRunning = true;
-            while (IsGameRunning == true)
+            while (IsGameRunning)
             {
                 Console.Clear();
-
-                foreach (var x in MapGrid)
-                    x.Print();
 
                 //Puts all of the diffrent blocks in the map
                 for (int row = 0; row < MaxPosRow; row++)
@@ -105,6 +102,10 @@ namespace Lab4_GridGame
                 Console.Write($"you have taken: {player.NumberOfTurns} steps");
                 Console.Write($"\nYou have: {player.NumberOfKey} keys.");
                 Console.WriteLine();
+
+                //To check if the player inside an monster room
+                InsideMonsterRoom();
+
                 //Switch to check if the player have pressed W, A, S, D, or Escape. Also checks if the player can move there
                 var Input = Console.ReadKey();
                 NextPlayerStep = (char)Input.Key;
@@ -152,6 +153,7 @@ namespace Lab4_GridGame
             }
 
         }
+        //Bool to check if the player can step on the next block
         private bool NextStep(int col, int row, char InputKey)
         {
             Block nextBlock = null;
@@ -177,9 +179,8 @@ namespace Lab4_GridGame
             {
                 return false;
             }
-            else if(nextBlock is Door)
+            else if (nextBlock is Door door)
             {
-                Door door = (Door)nextBlock;
                 if (door.DoorOpen)
                     return true;
                 else if (player.NumberOfKey > 0)
@@ -195,39 +196,6 @@ namespace Lab4_GridGame
                 return true;
         }
 
-        //To be able to open door if you have a key
-        /*public bool DoorIsOpen()
-        {
-            var nextBlock = MapGrid[player.PosY]
-
-            if
-                (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
-                 MapGrid[player.PosY + 1, player.PosX] == MapGrid[door1.PosY, door1.PosX] ||
-                 MapGrid[player.PosY, player.PosX - 1] == MapGrid[door1.PosY, door1.PosX] ||
-                 MapGrid[player.PosY, player.PosX + 1] == MapGrid[door1.PosY, door1.PosX])
-            {
-                door1.DoorOpen = true;
-            }
-            else if
-                (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
-                 MapGrid[player.PosY + 1, player.PosX] == MapGrid[door2.PosY, door2.PosX] ||
-                 MapGrid[player.PosY, player.PosX - 1] == MapGrid[door2.PosY, door2.PosX] ||
-                 MapGrid[player.PosY, player.PosX + 1] == MapGrid[door2.PosY, door2.PosX])
-            {
-                door2.DoorOpen = true;
-            }
-            else if
-                (MapGrid[player.PosY - 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
-                 MapGrid[player.PosY + 1, player.PosX] == MapGrid[door3.PosY, door3.PosX] ||
-                 MapGrid[player.PosY, player.PosX - 1] == MapGrid[door3.PosY, door3.PosX] ||
-                 MapGrid[player.PosY, player.PosX + 1] == MapGrid[door3.PosY, door3.PosX])
-            {
-                door3.DoorOpen = true;
-            }
-            player.NumberOfKey--;
-            player.NumberOfTurns++;
-            return true;
-        }*/
 
         //To be able to pick up keys
         public bool KeyIsPickedUp()

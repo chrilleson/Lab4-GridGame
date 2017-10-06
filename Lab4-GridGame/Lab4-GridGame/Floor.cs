@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    public class Floor : Block, IColorClass
+    public class Floor : Block, IPrint
     {
         public override void GetPos(int x, int y)
         {
             this.PosX = x;
             this.PosY = y;
         }
-        public override void Print()
+        public void Print()
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write('.');

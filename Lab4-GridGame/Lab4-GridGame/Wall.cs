@@ -13,10 +13,6 @@ namespace Lab4_GridGame
             this.PosX = x;
             this.PosY = y;
         }
-        public override void Print()
-        {
-            throw new NotImplementedException();
-        }
         public Wall()
         {
         }

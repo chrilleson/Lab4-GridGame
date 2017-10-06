@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    public class Player : IColorClass
+    public class Player : IPrint
     {
         //Player positions
         public int PosCol { get; set; }

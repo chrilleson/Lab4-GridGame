@@ -13,7 +13,7 @@ namespace Lab4_GridGame
             this.PosX = x;
             this.PosY = y;
         }
-        public override void Print()
+        public void Print()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("M");
@@ -21,6 +21,7 @@ namespace Lab4_GridGame
         }
         public Monster()
         {
+            Print();
         }
     }
 }
