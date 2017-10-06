@@ -16,11 +16,12 @@ namespace Lab4_GridGame
         public void Print()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("M");
+            Console.Write('M');
             Console.ResetColor();
         }
         public Monster()
         {
+            Print();
         }
     }
 }

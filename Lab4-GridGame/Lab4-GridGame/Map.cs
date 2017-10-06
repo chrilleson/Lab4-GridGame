@@ -52,6 +52,7 @@ namespace Lab4_GridGame
             door1.GetPos(4, 2);
             door2.GetPos(9, 4);
             door3.GetPos(3, 12);
+
             //Updating the map loop
             IsGameRunning = true;
             while (IsGameRunning != false)
@@ -70,6 +71,10 @@ namespace Lab4_GridGame
                             MapGrid[row, col] = new Wall();
                             Console.Write(' ');
                         }
+                        else if(row == 4 && col == 5)
+                        {
+                            MapGrid[row, col] = new Monster();
+                        }
                         else if (row == 2 && col == 4)
                         {
                             MapGrid[row, col] = new Key();
@@ -85,17 +90,17 @@ namespace Lab4_GridGame
                             MapGrid[row, col] = new Key();
                             Console.Write(buffer);
                         }
-                        else if (row == 3 && col == 1)
+                        else if (row == 3 && col == 1 && door1.DoorOpen==false)
                         {
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
                         }
-                        else if (row == 9 && col == 4)
+                        else if (row == 9 && col == 4 && door2.DoorOpen==false)
                         {
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
                         }
-                        else if (row == 3 && col == 12)
+                        else if (row == 3 && col == 12 && door3.DoorOpen==false)
                         {
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
@@ -171,7 +176,10 @@ namespace Lab4_GridGame
         //Bool to check if the player can step on the next block
         private bool NextStep(int col, int row, char InputKey)
         {            
-            if ((MapGrid[player.PosCol - 1, player.PosRow] is Wall && InputKey == 'W') || (MapGrid[player.PosCol, player.PosRow + 1] is Wall && InputKey == 'D') || (MapGrid[player.PosCol, player.PosRow - 1] is Wall && InputKey == 'A') || (MapGrid[player.PosCol + 1, player.PosRow] is Wall && InputKey == 'S'))
+            if ((MapGrid[player.PosCol - 1, player.PosRow] is Wall && InputKey == 'W') || 
+                (MapGrid[player.PosCol, player.PosRow + 1] is Wall && InputKey == 'D') || 
+                (MapGrid[player.PosCol, player.PosRow - 1] is Wall && InputKey == 'A') || 
+                (MapGrid[player.PosCol + 1, player.PosRow] is Wall && InputKey == 'S'))
             {
                 return false;
             }
