@@ -44,13 +44,13 @@ namespace Lab4_GridGame
             door3.DoorOpen = false;
 
             //Places all the keys, doors, and the exit
-            /*
+            
             key1.GetPos(2, 4);
             key2.GetPos(9, 14);
             key3.GetPos(5, 13);
             door1.GetPos(4, 2);
             door2.GetPos(9, 4);
-            door3.GetPos(3, 12);*/
+            door3.GetPos(3, 12);
             //Updating the map loop
             IsGameRunning = true;
             while (IsGameRunning != false)
@@ -156,42 +156,10 @@ namespace Lab4_GridGame
         }
         //Bool to check if the player can step on the next block
         private bool NextStep(int col, int row, char InputKey)
-        {
-            Block nextBlock = null;
-            switch (InputKey)
-            {
-                case 'W':
-                    nextBlock = MapGrid[player.PosRow - 1, player.PosCol];
-                    break;
-                case 'A':
-                    nextBlock = MapGrid[player.PosRow, player.PosCol - 1];
-                    break;
-                case 'S':
-                    nextBlock = MapGrid[player.PosRow + 1, player.PosCol];
-                    break;
-                case 'D':
-                    nextBlock = MapGrid[player.PosRow, player.PosCol + 1];
-                    break;
-                default:
-                    break;
-
-            }
-            if (nextBlock is Wall)
+        {            
+            if ((MapGrid[player.PosCol - 1, player.PosRow] is Wall && InputKey == 'W') || (MapGrid[player.PosCol, player.PosRow + 1] is Wall && InputKey == 'D') || (MapGrid[player.PosCol, player.PosRow - 1] is Wall && InputKey == 'A') || (MapGrid[player.PosCol + 1, player.PosRow] is Wall && InputKey == 'S'))
             {
                 return false;
-            }
-            else if (nextBlock is Door door)
-            {
-                if (door.DoorOpen)
-                    return true;
-                else if (player.NumberOfKey > 0)
-                {
-                    door.DoorOpen = true;
-                    player.NumberOfKey--;
-                    return true;
-                }
-                else
-                    return false;
             }
             else
                 return true;
