@@ -10,6 +10,9 @@ namespace Lab4_GridGame
     {
         static void Main(string[] args)
         {
+            Messages messages = new Messages();
+
+            messages.PrintStartScreen();
             Map map = new Map();
             map.RunGame();
         }

@@ -26,6 +26,7 @@ namespace Lab4_GridGame
         Door door2 = new Door();
         Door door3 = new Door();
         Exit exit = new Exit();
+        Messages messages = new Messages();
 
         //Function to run the game
         public void RunGame()
@@ -102,9 +103,8 @@ namespace Lab4_GridGame
                     }
                     Console.WriteLine();
                 }
-                Console.Write($"you have taken: {player.NumberOfTurns} steps");
-                Console.Write($"\nYou have: {player.NumberOfKey} keys.");
                 Console.WriteLine();
+                messages.PrintStepsAndKeys();
                 //Switch to check if the player have pressed W, A, S, D, or Escape. Also checks if the player can move there
                 var Input = Console.ReadKey();
                 NextPlayerStep = (char)Input.Key;
