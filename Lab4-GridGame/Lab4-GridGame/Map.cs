@@ -26,13 +26,6 @@ namespace Lab4_GridGame
         private Door door2 = new Door();
         private Door door3 = new Door();
         private Exit exit = new Exit();
-        Key key1 = new Key();
-        Key key2 = new Key();
-        Key key3 = new Key();
-        Door door1 = new Door();
-        Door door2 = new Door();
-        Door door3 = new Door();
-        Exit exit = new Exit();
         Messages messages = new Messages();
 
         //Function to run the game
@@ -51,15 +44,16 @@ namespace Lab4_GridGame
             door3.DoorOpen = false;
 
             //Places all the keys, doors, and the exit
+            /*
             key1.GetPos(2, 4);
             key2.GetPos(9, 14);
             key3.GetPos(5, 13);
             door1.GetPos(4, 2);
             door2.GetPos(9, 4);
-            door3.GetPos(3, 12);
+            door3.GetPos(3, 12);*/
             //Updating the map loop
             IsGameRunning = true;
-            while (IsGameRunning)
+            while (IsGameRunning != false)
             {
                 Console.Clear();
 
@@ -67,7 +61,7 @@ namespace Lab4_GridGame
                 for (int row = 0; row < MaxPosRow; row++)
                 {
                     for (int col = 0; col < MaxPosCol; col++)
-                    {
+                    {   
                         if (row == 0 || row == MaxPosRow - 1 || col == 0 || col == MaxPosCol - 1
                             || row < 4 && col == 8 || row == 3 && col == 8 || row == 3 && col == 9 || row == 3 && col == 10
                             || row == 3 && col == 11 || row == 3 && col >= 13)
@@ -152,7 +146,7 @@ namespace Lab4_GridGame
                         
                         break;
                     case ConsoleKey.Escape:
-                        Environment.Exit(0);
+                        IsGameRunning = false;
                         break;
                     default:
                         break;

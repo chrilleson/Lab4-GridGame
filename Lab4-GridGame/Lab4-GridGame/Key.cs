@@ -18,7 +18,7 @@ namespace Lab4_GridGame
         public void Print()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("K");
+            Console.Write('K');
             Console.ResetColor();
         }
         public Key()

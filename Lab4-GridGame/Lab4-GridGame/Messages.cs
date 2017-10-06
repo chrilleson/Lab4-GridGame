@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    class Messages : Map
+    class Messages
     {
+        Player player = new Player();
         public void PrintStepsAndKeys()
         {
             Console.Write($"you have taken: {player.NumberOfTurns} steps");

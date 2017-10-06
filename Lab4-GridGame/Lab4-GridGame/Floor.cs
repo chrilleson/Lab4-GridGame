@@ -15,13 +15,14 @@ namespace Lab4_GridGame
         }
         public void Print()
         {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write('.');
             Console.ResetColor();
         }
 
         public Floor()
         {
+            Print();
         }
     }
 }
