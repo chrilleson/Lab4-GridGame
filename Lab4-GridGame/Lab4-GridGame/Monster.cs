@@ -21,7 +21,6 @@ namespace Lab4_GridGame
         }
         public Monster()
         {
-            Print();
         }
     }
 }
