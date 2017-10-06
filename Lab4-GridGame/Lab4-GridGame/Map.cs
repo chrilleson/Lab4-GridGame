@@ -26,6 +26,14 @@ namespace Lab4_GridGame
         private Door door2 = new Door();
         private Door door3 = new Door();
         private Exit exit = new Exit();
+        Key key1 = new Key();
+        Key key2 = new Key();
+        Key key3 = new Key();
+        Door door1 = new Door();
+        Door door2 = new Door();
+        Door door3 = new Door();
+        Exit exit = new Exit();
+        Messages messages = new Messages();
 
         //Function to run the game
         public void RunGame()
@@ -99,13 +107,12 @@ namespace Lab4_GridGame
                     }
                     Console.WriteLine();
                 }
-                Console.Write($"you have taken: {player.NumberOfTurns} steps");
-                Console.Write($"\nYou have: {player.NumberOfKey} keys.");
                 Console.WriteLine();
 
                 //To check if the player inside an monster room
                 InsideMonsterRoom();
 
+                messages.PrintStepsAndKeys();
                 //Switch to check if the player have pressed W, A, S, D, or Escape. Also checks if the player can move there
                 var Input = Console.ReadKey();
                 NextPlayerStep = (char)Input.Key;
