@@ -13,6 +13,7 @@ namespace Lab4_GridGame
         public const int MaxPosRow = 10;
 
         public bool IsGameRunning;
+        public string buffer = " ";
 
         public char NextPlayerStep;
 
@@ -61,42 +62,53 @@ namespace Lab4_GridGame
                 for (int row = 0; row < MaxPosRow; row++)
                 {
                     for (int col = 0; col < MaxPosCol; col++)
-                    {   
+                    {
                         if (row == 0 || row == MaxPosRow - 1 || col == 0 || col == MaxPosCol - 1
                             || row < 4 && col == 8 || row == 3 && col == 8 || row == 3 && col == 9 || row == 3 && col == 10
                             || row == 3 && col == 11 || row == 3 && col >= 13)
+                        {
                             MapGrid[row, col] = new Wall();
+                            Console.Write(' ');
+                        }
                         else if (row == 2 && col == 4)
                         {
                             MapGrid[row, col] = new Key();
+                            Console.Write(buffer);
                         }
                         else if (row == 9 && col == 13)
                         {
                             MapGrid[row, col] = new Key();
+                            Console.Write(buffer);
                         }
                         else if (row == 5 && col == 13)
                         {
                             MapGrid[row, col] = new Key();
+                            Console.Write(buffer);
                         }
-                        else if (row == 3 && col == 1 )
+                        else if (row == 3 && col == 1)
                         {
                             MapGrid[row, col] = new Door();
+                            Console.Write(buffer);
                         }
-                        else if (row == 9 && col == 4 )
+                        else if (row == 9 && col == 4)
                         {
                             MapGrid[row, col] = new Door();
+                            Console.Write(buffer);
                         }
                         else if (row == 3 && col == 12)
                         {
                             MapGrid[row, col] = new Door();
+                            Console.Write(buffer);
                         }
                         else if (row == player.PosCol && col == player.PosRow)
                         {
                             player.WritePlayer();
+                            Console.Write(buffer);
                         }
                         else
                         {
                             MapGrid[row, col] = new Floor();
+                            Console.Write(buffer);
                         }
                     }
                     Console.WriteLine();
@@ -106,7 +118,10 @@ namespace Lab4_GridGame
                 //To check if the player inside an monster room
                 InsideMonsterRoom();
 
-                messages.PrintStepsAndKeys();
+                Console.Write($"you have taken: {player.NumberOfTurns} steps");
+                Console.Write($"\nYou have: {player.NumberOfKey} keys.");
+                Console.WriteLine();
+
                 //Switch to check if the player have pressed W, A, S, D, or Escape. Also checks if the player can move there
                 var Input = Console.ReadKey();
                 NextPlayerStep = (char)Input.Key;
@@ -152,7 +167,6 @@ namespace Lab4_GridGame
                         break;
                 }
             }
-
         }
         //Bool to check if the player can step on the next block
         private bool NextStep(int col, int row, char InputKey)

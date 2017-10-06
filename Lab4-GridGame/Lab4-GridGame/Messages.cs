@@ -8,13 +8,6 @@ namespace Lab4_GridGame
 {
     class Messages
     {
-        Player player = new Player();
-        public void PrintStepsAndKeys()
-        {
-            Console.Write($"you have taken: {player.NumberOfTurns} steps");
-            Console.Write($"\nYou have: {player.NumberOfKey} keys.");
-            Console.WriteLine();
-        }
         public void PrintStartScreen()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
