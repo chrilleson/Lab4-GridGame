@@ -47,12 +47,12 @@ namespace Lab4_GridGame
             //Places all the keys, doors, and the exit
             
             key1.GetPos(2, 4);
-            key2.GetPos(9, 14);
+            key2.GetPos(8, 12);
             key3.GetPos(5, 13);
             door1.GetPos(4, 2);
             door2.GetPos(9, 4);
             door3.GetPos(3, 12);
-
+            exit.GetPos(2, 11);
             //Updating the map loop
             IsGameRunning = true;
             while (IsGameRunning != false)
@@ -71,21 +71,21 @@ namespace Lab4_GridGame
                             MapGrid[row, col] = new Wall();
                             Console.Write(' ');
                         }
-                        else if(row == 4 && col == 5)
+                        else if (row == 4 && col == 5)
                         {
                             MapGrid[row, col] = new Monster();
                         }
-                        else if (row == 2 && col == 4)
+                        else if (row == 2 && col == 4 && key1.PickedUpKey == false)
                         {
                             MapGrid[row, col] = new Key();
                             Console.Write(buffer);
                         }
-                        else if (row == 9 && col == 13)
+                        else if (row == 8 && col == 12 && key2.PickedUpKey == false)
                         {
                             MapGrid[row, col] = new Key();
                             Console.Write(buffer);
                         }
-                        else if (row == 5 && col == 13)
+                        else if (row == 5 && col == 13 && key3.PickedUpKey == false)
                         {
                             MapGrid[row, col] = new Key();
                             Console.Write(buffer);
@@ -95,7 +95,7 @@ namespace Lab4_GridGame
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
                         }
-                        else if (row == 9 && col == 4 && door2.DoorOpen==false)
+                        else if (row == 7 && col == 4 && door2.DoorOpen==false)
                         {
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
@@ -103,6 +103,11 @@ namespace Lab4_GridGame
                         else if (row == 3 && col == 12 && door3.DoorOpen==false)
                         {
                             MapGrid[row, col] = new Door();
+                            Console.Write(buffer);
+                        }
+                        else if(row == 2 && col == 10)
+                        {
+                            MapGrid[row, col] = new Exit();
                             Console.Write(buffer);
                         }
                         else if (row == player.PosCol && col == player.PosRow)
@@ -119,6 +124,9 @@ namespace Lab4_GridGame
                     Console.WriteLine();
                 }
                 Console.WriteLine();
+
+                //Checks if the player have any keys and how many
+                CurrentKeys();
 
                 //To check if the player inside an monster room
                 InsideMonsterRoom();
@@ -138,6 +146,7 @@ namespace Lab4_GridGame
                             break;
                         else
                             player.PosCol--;
+                        KeyIsPickedUp();
                             player.NumberOfTurns++;
                         
                         break;
@@ -147,7 +156,7 @@ namespace Lab4_GridGame
                         else
                             player.PosRow--;
                             player.NumberOfTurns++;
-                        
+                        KeyIsPickedUp();
                         break;
                     case ConsoleKey.S:
                         if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
@@ -155,7 +164,8 @@ namespace Lab4_GridGame
                         else
                             player.PosCol++;
                             player.NumberOfTurns++;
-                        
+                            KeyIsPickedUp();
+
                         break;
                     case ConsoleKey.D:
                         if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
@@ -163,7 +173,7 @@ namespace Lab4_GridGame
                         else
                             player.PosRow++;
                             player.NumberOfTurns++;
-                        
+                            KeyIsPickedUp();
                         break;
                     case ConsoleKey.Escape:
                         IsGameRunning = false;
@@ -183,10 +193,61 @@ namespace Lab4_GridGame
             {
                 return false;
             }
+            else if (MapGrid[player.PosRow-1, player.PosCol] is Door && InputKey == 'W' ||
+                MapGrid[player.PosRow + 1, player.PosCol] is Door && InputKey == 'S' ||
+                MapGrid[player.PosRow, player.PosCol - 1] is Door && InputKey == 'A' ||
+                MapGrid[player.PosRow, player.PosCol + 1] is Door && InputKey == 'D')
+            {
+                if (IsDoorOpen() == true)
+                    return true;
+                else
+                    return false;
+            }
             else
                 return true;
         }
 
+        public bool IsDoorOpen()
+        {
+            if (player.HaveKey)
+            {
+                if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door1.PosY, door1.PosX] ||
+                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door1.PosY, door1.PosX] ||
+                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door1.PosY, door1.PosX] ||
+                    MapGrid[player.PosRow, player.PosCol -+1] == MapGrid[door1.PosY, door1.PosX])
+                {
+                    door1.DoorOpen = true;
+                }
+                else if(MapGrid[player.PosRow-1, player.PosCol] == MapGrid[door2.PosY, door2.PosX] ||
+                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door2.PosY, door2.PosX] ||
+                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door2.PosY, door2.PosX] ||
+                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door2.PosY, door2.PosX])
+                {
+                    door2.DoorOpen = true;
+                }
+                else if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door3.PosY, door2.PosX] ||
+                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door3.PosY, door2.PosX] ||
+                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door3.PosY, door2.PosX] ||
+                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door3.PosY, door2.PosX])
+                {
+                    door3.DoorOpen = true;
+                }
+                player.NumberOfKey--;
+                player.NumberOfKey++;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public void CurrentKeys()
+        {
+            if (player.NumberOfKey <= 0)
+            {
+                player.HaveKey = false;
+                player.NumberOfKey = 0;
+            }
+        }
 
         //To be able to pick up keys
         public bool KeyIsPickedUp()
@@ -226,7 +287,7 @@ namespace Lab4_GridGame
                 (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'A') ||
                 (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'S'))
             {
-                player.NumberOfTurns += 35;
+                player.NumberOfTurns += 10;
             }
         }
 

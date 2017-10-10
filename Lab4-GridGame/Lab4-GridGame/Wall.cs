@@ -8,10 +8,10 @@ namespace Lab4_GridGame
 {
     public class Wall : Block, IPrint
     {
-        public override void GetPos(int x, int y)
+        public override void GetPos(int y, int x)
         {
-            this.PosX = x;
             this.PosY = y;
+            this.PosX = x;
         }
         public void Print()
         {

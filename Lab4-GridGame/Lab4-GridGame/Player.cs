@@ -19,10 +19,10 @@ namespace Lab4_GridGame
         //counts the number of steps that the player have taken
         public int NumberOfTurns { get; set; }
 
-        public void SetPlayerPos(int x, int y)
+        public void SetPlayerPos(int y, int x)
         {
-            this.PosCol = x;
             this.PosRow = y;
+            this.PosCol = x;
         }
 
         public void Print()
