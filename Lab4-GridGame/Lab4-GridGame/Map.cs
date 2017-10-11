@@ -129,7 +129,6 @@ namespace Lab4_GridGame
                 CurrentKeys();
 
                 //To check if the player inside an monster room
-                InsideMonsterRoom();
 
                 Console.Write($"you have taken: {player.NumberOfTurns} steps");
                 Console.Write($"\nYou have: {player.NumberOfKey} keys.");
@@ -287,7 +286,7 @@ namespace Lab4_GridGame
                 (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'A') ||
                 (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'S'))
             {
-                player.NumberOfTurns += 10;
+                player.NumberOfTurns += 35;
             }
         }
 
