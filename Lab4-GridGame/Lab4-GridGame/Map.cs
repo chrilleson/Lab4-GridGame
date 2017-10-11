@@ -121,7 +121,6 @@ namespace Lab4_GridGame
                 Console.WriteLine();
 
                 //To check if the player inside an monster room
-                InsideMonsterRoom();
 
                 Console.Write($"you have taken: {player.NumberOfTurns} steps");
                 Console.Write($"\nYou have: {player.NumberOfKey} keys.");
@@ -219,16 +218,7 @@ namespace Lab4_GridGame
                 return false;
         }
         // If you're walking in a monster room.
-        public void InsideMonsterRoom()
-        {
-            if ((MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'W') ||
-                (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'D') ||
-                (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'A') ||
-                (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'S'))
-            {
-                player.NumberOfTurns += 35;
-            }
-        }
+        
 
 
     }
