@@ -210,29 +210,29 @@ namespace Lab4_GridGame
         {
             if (player.HaveKey)
             {
-                if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door1.PosY, door1.PosX] ||
-                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door1.PosY, door1.PosX] ||
-                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door1.PosY, door1.PosX] ||
-                    MapGrid[player.PosRow, player.PosCol -+1] == MapGrid[door1.PosY, door1.PosX])
+                if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door1.PosRow, door1.PosCol] ||
+                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door1.PosRow, door1.PosCol] ||
+                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door1.PosRow, door1.PosCol] ||
+                    MapGrid[player.PosRow, player.PosCol -+1] == MapGrid[door1.PosRow, door1.PosCol])
                 {
                     door1.DoorOpen = true;
                 }
-                else if(MapGrid[player.PosRow-1, player.PosCol] == MapGrid[door2.PosY, door2.PosX] ||
-                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door2.PosY, door2.PosX] ||
-                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door2.PosY, door2.PosX] ||
-                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door2.PosY, door2.PosX])
+                else if(MapGrid[player.PosRow-1, player.PosCol] == MapGrid[door2.PosRow, door2.PosCol] ||
+                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door2.PosRow, door2.PosCol] ||
+                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door2.PosRow, door2.PosCol] ||
+                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door2.PosRow, door2.PosCol])
                 {
                     door2.DoorOpen = true;
                 }
-                else if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door3.PosY, door2.PosX] ||
-                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door3.PosY, door2.PosX] ||
-                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door3.PosY, door2.PosX] ||
-                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door3.PosY, door2.PosX])
+                else if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door3.PosRow, door2.PosCol] ||
+                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door3.PosRow, door2.PosCol] ||
+                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door3.PosRow, door2.PosCol] ||
+                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door3.PosRow, door2.PosCol])
                 {
                     door3.DoorOpen = true;
                 }
                 player.NumberOfKey--;
-                player.NumberOfKey++;
+                player.NumberOfTurns++;
                 return true;
             }
             else
@@ -251,7 +251,7 @@ namespace Lab4_GridGame
         //To be able to pick up keys
         public bool KeyIsPickedUp()
         {
-            if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key1.PosY, key1.PosX] && key1.PickedUpKey == false)
+            if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key1.PosRow, key1.PosCol] && key1.PickedUpKey == false)
             {
                 key1.PickedUpKey = true;
                 player.HaveKey = true;
@@ -259,7 +259,7 @@ namespace Lab4_GridGame
                 player.NumberOfTurns++;
                 return true;
             }
-            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosY, key2.PosX] && key2.PickedUpKey == false)
+            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2.PickedUpKey == false)
             {
                 key2.PickedUpKey = true;
                 player.HaveKey = true;
@@ -267,7 +267,7 @@ namespace Lab4_GridGame
                 player.NumberOfTurns++;
                 return true;
             }
-            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key3.PosY, key3.PosX] && key3.PickedUpKey == false)
+            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key3.PosRow, key3.PosCol] && key3.PickedUpKey == false)
             {
                 key3.PickedUpKey = true;
                 player.HaveKey = true;
@@ -286,7 +286,7 @@ namespace Lab4_GridGame
                 (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'A') ||
                 (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'S'))
             {
-                player.NumberOfTurns += 35;
+                player.NumberOfTurns += 10;
             }
         }
 

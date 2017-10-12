@@ -10,8 +10,8 @@ namespace Lab4_GridGame
     {
         public override void GetPos(int y, int x)
         {
-            this.PosY = y;
-            this.PosX = x;
+            this.PosRow = y;
+            this.PosCol = x;
         }
         public void Print()
         {

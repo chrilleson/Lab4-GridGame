@@ -9,8 +9,8 @@ namespace Lab4_GridGame
     //Positions on every block.
     public abstract class Block
     {
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+        public int PosCol { get; set; }
+        public int PosRow { get; set; }
 
         public abstract void GetPos(int x, int y);
     }

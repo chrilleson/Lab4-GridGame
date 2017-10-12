@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    class Door : Block
+    public class Door : Block, IPrint
     {
         public bool DoorOpen { get; set; }
 
         public override void GetPos(int x, int y)
         {
-            this.PosY = y;
-            this.PosX = x;
+            this.PosRow = y;
+            this.PosCol = x;
         }
         public void Print()
         {
