@@ -315,7 +315,7 @@ namespace Lab4_GridGame
                 (MapGrid[player.PosRow, player.PosCol] is Troll && playerInput == 'S')
                 )
                 {
-                player.NumberOfTurns += 60;
+                player.NumberOfTurns += 70;
                 Console.WriteLine("You're greedy, aren't you ? ");
                 Console.WriteLine("You entered a room where the Troll is, it takes you a while to fight it.");
             }
