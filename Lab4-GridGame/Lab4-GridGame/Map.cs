@@ -42,10 +42,10 @@ namespace Lab4_GridGame
             door2.DoorOpen = false;
 
             //Sets key, door and exit positions on the map
-            key1.GetPos(3, 7);
-            key2.GetPos(8, 14);
+            key1.GetPos(1, 1);
+            key2.GetPos(8, 1);
             door1.GetPos(5, 5);
-            door2.GetPos(2, 13);
+            door2.GetPos(6, 15);
             exit.GetPos(8, 18);
 
             //Update map loop based on player input
@@ -61,12 +61,12 @@ namespace Lab4_GridGame
                     {
                         if (col == 0 || col == MapGrid.GetLength(1) - 1 || row == 0 || row == MapGrid.GetLength(0) - 1 ||
                             col == 2 && row == 3 || col == 2 && row == 2 || col == 12 && row == 3 || col == 12 && row == 2 ||
-                            col == 6 && row == 1 || col == 8 && row == 1 || col == 6 && row == 3 || col == 8 && row == 3 || row == 5 && col != 5 && col != 16 || col == 15 || col == 14 && row == 1 )
+                            col == 6 && row == 1 || col == 8 && row == 1 || col == 6 && row == 3 || col == 8 && row == 3 || row == 5 && col != 5 && col != 16 || col == 15 && row != 6 || col == 14 && row == 1 || col == 4 && row == 6 || col == 4 && row == 7 || col == 2 && row == 7 )
                         {
                             MapGrid[row, col] = new Wall();
                             Console.Write(' ');
                         }
-                        else if (col == 4 && row == 2 || col == 10 && row == 2)
+                        else if (col == 4 && row == 2 || col == 10 && row == 2 || col == 2 && row == 8 )
                         {
                             MapGrid[row, col] = new Monster();
                             Console.Write(buffer);
@@ -76,17 +76,17 @@ namespace Lab4_GridGame
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
                         }
-                        else if (col == 13 && row == 2 && door2.DoorOpen == false)
+                        else if (col == 15 && row == 6 && door2.DoorOpen == false)
                         {
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
                         }
-                        else if (col == 7 && row == 3 && key1.PickedUpKey == false)
+                        else if (col == 1 && row == 1 && key1.PickedUpKey == false)
                         {
                             MapGrid[row, col] = new Key();
                             Console.Write(buffer);
                         }
-                        else if (col == 14 && row == 8 && key2.PickedUpKey == false)
+                        else if (col == 1 && row == 8 && key2.PickedUpKey == false)
                         {
                             MapGrid[row, col] = new Key();
                             Console.Write(buffer);
