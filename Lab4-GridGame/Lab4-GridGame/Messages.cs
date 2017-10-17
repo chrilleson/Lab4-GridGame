@@ -26,6 +26,9 @@ namespace Lab4_GridGame
             Console.WriteLine("\t\t\t\t\t\t   \\\\//");
             Console.WriteLine("\t\t\t\t\t\t    || ");
             Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("\t\t\t\t      Press any key to start the game. ");
+            Console.ResetColor();
             Console.ReadKey();
         }
     }
