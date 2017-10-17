@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    class Monster : Block
+    class Monster : Block, IPrint
     {
-        public override void GetPos(int x, int y)
+        public override void GetPos(int y, int x)
         {
             this.PosCol = x;
             this.PosRow = y;
@@ -16,7 +16,7 @@ namespace Lab4_GridGame
         public void Print()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("M ");
+            Console.Write("M");
             Console.ResetColor();
         }
         public Monster()

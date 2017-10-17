@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    class Key : Block
+    class Key : Block, IPrint
     {
         public bool PickedUpKey { get; set; }
 
