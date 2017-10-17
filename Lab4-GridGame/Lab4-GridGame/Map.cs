@@ -202,7 +202,9 @@ namespace Lab4_GridGame
             if (MapGrid[y, x] is Exit)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("\n\n\n\t\tYOU REACHED THE EXIT!");
+                Console.ResetColor();
                 Console.ReadKey();
                 GameLoop = false;
                 Console.Clear();
