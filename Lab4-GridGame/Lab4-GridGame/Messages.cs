@@ -11,12 +11,16 @@ namespace Lab4_GridGame
         public void PrintStartScreen()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\t\t\t   A simple game by Christoffer and Knut");
+            Console.WriteLine("\t\t\t\t    A simple game by Christoffer and Knut");
             Console.ResetColor();
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.Write("\t\t\t\t\tHave fun!");
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("\t\t\t\t\t\t~///--\\\\\\~");
             Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("\t\t\t\t\t\t Have fun!");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.WriteLine("\t\t\t\t\t\t~\\\\\\--///~");
             Console.ReadKey();
         }
     }

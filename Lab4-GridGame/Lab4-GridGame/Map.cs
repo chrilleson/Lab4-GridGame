@@ -189,7 +189,7 @@ namespace Lab4_GridGame
             }
 
             //When the player reaches the exit and exits the map loop, this message plays.
-            Console.WriteLine($"\n\n\t\t\tGOOD JOB!");
+            Console.WriteLine($"\n\n\t\t\tWELL PLAYED!");
             Console.WriteLine($"\n\n\t   TOTAL STEPS TAKEN TO REACH EXIT: {player.NumberOfTurns}");
             if(player.PosCol == 16 && player.PosRow == 5)
                 Console.WriteLine("You're greedy, aren't you?");
