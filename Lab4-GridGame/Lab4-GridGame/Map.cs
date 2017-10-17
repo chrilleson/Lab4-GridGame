@@ -119,9 +119,9 @@ namespace Lab4_GridGame
                 CurrentNumberOfKeys();
 
                 //Prints useful information for the player:
-                Console.Write($"KEYS: {player.NumberOfKey}");
-                Console.Write($"\t\tSTEPS TAKEN: {player.NumberOfTurns}");
-                Console.Write($"\n\tPREVIOUS MOVE: {playerInput}");
+                Console.Write($"Number of keys:        {player.NumberOfKey}");
+                Console.Write($"\nNumber of steps taken: {player.NumberOfTurns}");
+                Console.Write($"\nYour previous move:    {playerInput}");
                 Console.WriteLine();
 
                 //Checks if the player is on a monster-tile
