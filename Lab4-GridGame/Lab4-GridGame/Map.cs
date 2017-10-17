@@ -61,7 +61,7 @@ namespace Lab4_GridGame
                     {
                         if (col == 0 || col == MapGrid.GetLength(1) - 1 || row == 0 || row == MapGrid.GetLength(0) - 1 ||
                             col == 2 && row == 3 || col == 2 && row == 2 || col == 12 && row == 3 || col == 12 && row == 2 ||
-                            col == 6 && row == 1 || col == 8 && row == 1 || col == 6 && row == 3 || col == 8 && row == 3 || row == 5 && col != 5 && col != 16 || col == 15 && row != 6 || col == 4 && row == 6 || col == 4 && row == 7 || col == 2 && row == 7 || col == 15 && row >= 3)
+                            col == 6 && row == 1 || col == 8 && row == 1 || col == 6 && row == 3 || col == 8 && row == 3 || row == 5 && col != 5 && col != 16 || col == 4 && row == 6 || col == 4 && row == 7 || col == 2 && row == 7 || col == 15 && row >= 3 && row != 6 && row >= 7)
                         {
                             MapGrid[row, col] = new Wall();
                             Console.Write(' ');
