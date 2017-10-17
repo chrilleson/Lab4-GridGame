@@ -5,14 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Lab4_GridGame
-{       //TODO: Flytta infyllningen av mapen till en egen funktion utanför game loopen, fixa utskriften av map efter row, column.
+{
+    //Level of the game
     public class Map
     {
-        //The max positions of the map
-        public const int MaxPosCol = 20;
-        public const int MaxPosRow = 10;
+        //X- & Y variables to set map size
+        public static int MaxCol = 20;
+        public static int MaxRow = 10;
 
-        public bool IsGameRunning;
+        //Player input variable for visual representation
+        public char playerInput;
+
+        public bool GameLoop;
         public string buffer = " ";
 
         //Instantiates game objects and Player for the map
@@ -24,11 +28,11 @@ namespace Lab4_GridGame
         private Door door2 = new Door();
         private Exit exit = new Exit();
 
-        //Function to run the game
+        //Function that runs the games map
         public void RunGame()
         {
-            //Standard values
-            player.SetPlayerPos(5, 7);
+            //Create map-specific variables and setting player-, key-, and door starting values
+            player.SetPlayerPos(2, 7);
             player.HaveKey = false;
             player.NumberOfKey = 0;
             player.NumberOfTurns = 0;
@@ -37,18 +41,16 @@ namespace Lab4_GridGame
             door1.DoorOpen = false;
             door2.DoorOpen = false;
 
-            //Places all the keys, doors, and the exit
-            
-            key1.GetPos(2, 4);
-            key2.GetPos(8, 12);
-            key3.GetPos(5, 13);
-            door1.GetPos(4, 2);
-            door2.GetPos(9, 4);
-            door3.GetPos(3, 12);
-            exit.GetPos(2, 11);
-            //Updating the map loop
-            IsGameRunning = true;
-            while (IsGameRunning != false)
+            //Sets key, door and exit positions on the map
+            key1.GetPos(3, 7);
+            key2.GetPos(3, 1);
+            door1.GetPos(2, 8);
+            door2.GetPos(2, 13);
+            exit.GetPos(3, 13);
+
+            //Update map loop based on player input
+            GameLoop = true;
+            while (GameLoop)
             {
                 Console.Clear();
 
@@ -106,22 +108,26 @@ namespace Lab4_GridGame
                         }
                     }
                     Console.WriteLine();
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
 
-                //Checks if the player have any keys and how many
-                CurrentKeys();
+                //Calls function that checks how many keys the Player currently has
+                CurrentNumberOfKeys();
 
-                //To check if the player inside an monster room
-
-                Console.Write($"you have taken: {player.NumberOfTurns} steps");
-                Console.Write($"\nYou have: {player.NumberOfKey} keys.");
+                //Prints useful information for the player:
+                Console.Write($"KEYS: {player.NumberOfKey}");
+                Console.Write($"\t\tSTEPS TAKEN: {player.NumberOfTurns}");
+                Console.Write($"\n\tPREVIOUS MOVE: {playerInput}");
                 Console.WriteLine();
 
                 //Checks if the player is on a monster-tile
                 IsMonsterRoom();
 
-                switch (Input.Key)
+                //Switch statement to register player input and check whether or not the player is able to take a step.
+                var input = Console.ReadKey();
+                playerInput = (char)input.Key;
+
+                switch (input.Key)
                 {
                     case ConsoleKey.W:
                         if (NextStep(player.PosRow, player.PosCol, playerInput) == false)
@@ -195,14 +201,6 @@ namespace Lab4_GridGame
                 Console.Clear();
             }
         }
-        //Bool to check if the player can step on the next block
-
-        private bool NextStep(int col, int row, char InputKey)
-        {            
-            if ((MapGrid[player.PosCol - 1, player.PosRow] is Wall && InputKey == 'W') || 
-                (MapGrid[player.PosCol, player.PosRow + 1] is Wall && InputKey == 'D') || 
-                (MapGrid[player.PosCol, player.PosRow - 1] is Wall && InputKey == 'A') || 
-                (MapGrid[player.PosCol + 1, player.PosRow] is Wall && InputKey == 'S'))
 
         //Function to return true or false depending on if the player is standing by a wall or locked door and is able to move or not.
         public bool NextStep(int y, int x, char keyInput)
@@ -228,6 +226,7 @@ namespace Lab4_GridGame
                 return true;
         }
 
+        //Function to handle the opening of doors.
         public bool IsDoorOpen()
         {
             if (player.HaveKey)
@@ -254,7 +253,8 @@ namespace Lab4_GridGame
                 return false;
         }
 
-        public void CurrentKeys()
+        //Function that checks the players current number of keys
+        public void CurrentNumberOfKeys()
         {
             if (player.NumberOfKey <= 0)
             {
@@ -263,8 +263,8 @@ namespace Lab4_GridGame
             }
         }
 
-        //To be able to pick up keys
-        public bool KeyIsPickedUp()
+        //Function for picking up keys. 
+        public bool PickUpKey()
         {
             if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key1.PosRow, key1.PosCol] && key1.PickedUpKey == false)
             {
@@ -274,7 +274,7 @@ namespace Lab4_GridGame
                 player.NumberOfTurns++;
                 return true;
             }
-            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2 .PickedUpKey == false)
+            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2.PickedUpKey == false)
             {
                 key2.PickedUpKey = true;
                 player.HaveKey = true;
