@@ -191,8 +191,8 @@ namespace Lab4_GridGame
             //When the player reaches the exit and exits the map loop, this message plays.
             Console.WriteLine($"\n\n\t\t\tGOOD JOB!");
             Console.WriteLine($"\n\n\t   TOTAL STEPS TAKEN TO REACH EXIT: {player.NumberOfTurns}");
-            if (player.NumberOfTurns > 200)
-                Console.WriteLine("\t\t\tYOU SUCK");
+            if(player.PosCol == 16 && player.PosRow == 5)
+                Console.WriteLine("You're greedy, aren't you?");
             Console.ReadKey();
         }
 
@@ -314,6 +314,7 @@ namespace Lab4_GridGame
                 )
                 {
                 player.NumberOfTurns += 60;
+                Console.WriteLine("You're greedy, aren't you ? ");
                 Console.WriteLine("You entered a room where the Troll is, it takes you a while to fight it.");
             }
         }
