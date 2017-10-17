@@ -42,7 +42,7 @@ namespace Lab4_GridGame
             door2.DoorOpen = false;
 
             //Sets key, door and exit positions on the map
-            key1.GetPos(1, 1);
+            key1.GetPos(1, 4);
             key2.GetPos(8, 1);
             door1.GetPos(5, 5);
             door2.GetPos(6, 15);
@@ -61,12 +61,12 @@ namespace Lab4_GridGame
                     {
                         if (col == 0 || col == MapGrid.GetLength(1) - 1 || row == 0 || row == MapGrid.GetLength(0) - 1 ||
                             col == 2 && row == 3 || col == 2 && row == 2 || col == 12 && row == 3 || col == 12 && row == 2 ||
-                            col == 6 && row == 1 || col == 8 && row == 1 || col == 6 && row == 3 || col == 8 && row == 3 || row == 5 && col != 5 && col != 16 || col == 4 && row == 6 || col == 4 && row == 7 || col == 2 && row == 7 || col == 15 && row >= 3 && row != 6 && row >= 7)
+                            col == 6 && row <= 3 || col == 7 && row == 3 || col == 8 && row == 3 || col == 9 && row == 3 || row == 5 && col != 5 && col != 16 || col == 4 && row == 6 || col == 4 && row == 7 || col == 2 && row == 7 || col == 15 && row >= 3 && row != 6 && row >= 7)
                         {
                             MapGrid[row, col] = new Wall();
                             Console.Write(' ');
                         }
-                        else if (col == 4 && row == 2 || col == 10 && row == 2 || col == 2 && row == 8 )
+                        else if (col == 2 && row == 4 || col == 12 && row == 4 || col == 2 && row == 8 )
                         {
                             MapGrid[row, col] = new Monster();
                             Console.Write(buffer);
@@ -86,7 +86,7 @@ namespace Lab4_GridGame
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
                         }
-                        else if (col == 1 && row == 1 && key1.PickedUpKey == false)
+                        else if (col == 1 && row == 4 && key1.PickedUpKey == false)
                         {
                             MapGrid[row, col] = new Key();
                             Console.Write(buffer);
