@@ -50,7 +50,7 @@ namespace Lab4_GridGame
 
             //Update map loop based on player input
             GameLoop = true;
-            while (GameLoop)
+            while (GameLoop != false)
             {
                 Console.Clear();
 
@@ -107,7 +107,6 @@ namespace Lab4_GridGame
                             Console.Write(buffer);
                         }
                     }
-                    Console.WriteLine();
                     Console.WriteLine();
                 }
 
@@ -176,6 +175,9 @@ namespace Lab4_GridGame
                             ReachExit(player.PosRow, player.PosCol, playerInput);
                             break;
                         }
+                    case ConsoleKey.Escape:
+                        Environment.Exit(0);
+                        break;
                     default:
                         break;
                 }
