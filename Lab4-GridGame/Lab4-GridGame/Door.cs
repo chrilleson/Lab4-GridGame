@@ -10,7 +10,7 @@ namespace Lab4_GridGame
     {
         public bool DoorOpen { get; set; }
 
-        public override void GetPos(int x, int y)
+        public override void GetPos(int y, int x)
         {
             this.PosRow = y;
             this.PosCol = x;

@@ -183,6 +183,7 @@ namespace Lab4_GridGame
             }
         }
         //Bool to check if the player can step on the next block
+
         private bool NextStep(int col, int row, char InputKey)
         {            
             if ((MapGrid[player.PosCol - 1, player.PosRow] is Wall && InputKey == 'W') || 

@@ -8,7 +8,7 @@ namespace Lab4_GridGame
 {
     class Monster : Block
     {
-        public override void GetPos(int x, int y)
+        public override void GetPos(int y, int x)
         {
             this.PosCol = x;
             this.PosRow = y;
