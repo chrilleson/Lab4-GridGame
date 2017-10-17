@@ -274,7 +274,7 @@ namespace Lab4_GridGame
                 player.NumberOfTurns++;
                 return true;
             }
-            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2.PickedUpKey == false)
+            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2 .PickedUpKey == false)
             {
                 key2.PickedUpKey = true;
                 player.HaveKey = true;
