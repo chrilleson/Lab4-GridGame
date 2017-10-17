@@ -14,13 +14,18 @@ namespace Lab4_GridGame
             Console.WriteLine("\t\t\t\t    A simple game by Christoffer and Knut");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("\t\t\t\t\t\t~///--\\\\\\~");
+            Console.WriteLine("\t\t\t\t\t\t    || ");
+            Console.WriteLine("\t\t\t\t\t\t   //\\\\ ");
+            Console.WriteLine("\t\t\t\t\t    ~~~~~///--\\\\\\~~~~~");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("\t\t\t\t\t\t Have fun!");
             Console.ResetColor();
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("\t\t\t\t\t\t~\\\\\\--///~");
+            Console.WriteLine("\t\t\t\t\t    ~~~~~\\\\\\--///~~~~~");
+            Console.WriteLine("\t\t\t\t\t\t   \\\\//");
+            Console.WriteLine("\t\t\t\t\t\t    || ");
+            Console.ResetColor();
             Console.ReadKey();
         }
     }

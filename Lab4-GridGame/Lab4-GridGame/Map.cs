@@ -42,7 +42,7 @@ namespace Lab4_GridGame
             door2.DoorOpen = false;
 
             //Sets key, door and exit positions on the map
-            key1.GetPos(1, 4);
+            key1.GetPos(4, 1);
             key2.GetPos(8, 1);
             door1.GetPos(5, 5);
             door2.GetPos(6, 15);
