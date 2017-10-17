@@ -45,7 +45,7 @@
     <Compile Include="Door.cs" />
     <Compile Include="Exit.cs" />
     <Compile Include="Floor.cs" />
-    <Compile Include="IColorClass.cs" />
+    <Compile Include="IPrint.cs" />
     <Compile Include="Key.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Messages.cs" />

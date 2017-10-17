@@ -15,19 +15,14 @@ namespace Lab4_GridGame
         public bool IsGameRunning;
         public string buffer = " ";
 
-        public char NextPlayerStep;
-
-        //Creates game objects and the player
-        Block[,] MapGrid = new Block[MaxPosRow, MaxPosCol];
+        //Instantiates game objects and Player for the map
+        Block[,] MapGrid = new Block[MaxRow, MaxCol];
         public Player player = new Player();
         private Key key1 = new Key();
         private Key key2 = new Key();
-        private Key key3 = new Key();
         private Door door1 = new Door();
         private Door door2 = new Door();
-        private Door door3 = new Door();
         private Exit exit = new Exit();
-        Messages messages = new Messages();
 
         //Function to run the game
         public void RunGame()
@@ -39,10 +34,8 @@ namespace Lab4_GridGame
             player.NumberOfTurns = 0;
             key1.PickedUpKey = false;
             key2.PickedUpKey = false;
-            key3.PickedUpKey = false;
             door1.DoorOpen = false;
             door2.DoorOpen = false;
-            door3.DoorOpen = false;
 
             //Places all the keys, doors, and the exit
             
@@ -59,58 +52,49 @@ namespace Lab4_GridGame
             {
                 Console.Clear();
 
-                //Puts all of the diffrent blocks in the map
-                for (int row = 0; row < MaxPosRow; row++)
+                //Filling mapArray with objects based on Level Design
+                for (int row = 0; row < MapGrid.GetLength(0); row++)
                 {
-                    for (int col = 0; col < MaxPosCol; col++)
+                    for (int col = 0; col < MapGrid.GetLength(1); col++)
                     {
-                        if (row == 0 || row == MaxPosRow - 1 || col == 0 || col == MaxPosCol - 1
-                            || row < 4 && col == 8 || row == 3 && col == 8 || row == 3 && col == 9 || row == 3 && col == 10
-                            || row == 3 && col == 11 || row == 3 && col >= 13)
+                        if (col == 0 || col == MapGrid.GetLength(1) - 1 || row == 0 || row == MapGrid.GetLength(0) - 1 ||
+                            col == 2 && row == 3 || col == 2 && row == 2 || col == 12 && row == 3 || col == 12 && row == 2 ||
+                            col == 6 && row == 1 || col == 8 && row == 1 || col == 6 && row == 3 || col == 8 && row == 3)
                         {
                             MapGrid[row, col] = new Wall();
                             Console.Write(' ');
                         }
-                        else if (row == 4 && col == 5)
+                        else if (col == 4 && row == 2 || col == 10 && row == 2)
                         {
                             MapGrid[row, col] = new Monster();
-                        }
-                        else if (row == 2 && col == 4 && key1.PickedUpKey == false)
-                        {
-                            MapGrid[row, col] = new Key();
                             Console.Write(buffer);
                         }
-                        else if (row == 8 && col == 12 && key2.PickedUpKey == false)
-                        {
-                            MapGrid[row, col] = new Key();
-                            Console.Write(buffer);
-                        }
-                        else if (row == 5 && col == 13 && key3.PickedUpKey == false)
-                        {
-                            MapGrid[row, col] = new Key();
-                            Console.Write(buffer);
-                        }
-                        else if (row == 3 && col == 1 && door1.DoorOpen==false)
+                        else if (col == 8 && row == 2 && door1.DoorOpen == false)
                         {
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
                         }
-                        else if (row == 7 && col == 4 && door2.DoorOpen==false)
+                        else if (col == 13 && row == 2 && door2.DoorOpen == false)
                         {
                             MapGrid[row, col] = new Door();
                             Console.Write(buffer);
                         }
-                        else if (row == 3 && col == 12 && door3.DoorOpen==false)
+                        else if (col == 7 && row == 3 && key1.PickedUpKey == false)
                         {
-                            MapGrid[row, col] = new Door();
+                            MapGrid[row, col] = new Key();
                             Console.Write(buffer);
                         }
-                        else if(row == 2 && col == 10)
+                        else if (col == 1 && row == 3 && key2.PickedUpKey == false)
+                        {
+                            MapGrid[row, col] = new Key();
+                            Console.Write(buffer);
+                        }
+                        else if (row == 3 && col == 13)
                         {
                             MapGrid[row, col] = new Exit();
                             Console.Write(buffer);
                         }
-                        else if (row == player.PosCol && col == player.PosRow)
+                        else if (row == player.PosRow && col == player.PosCol)
                         {
                             player.WritePlayer();
                             Console.Write(buffer);
@@ -134,52 +118,81 @@ namespace Lab4_GridGame
                 Console.Write($"\nYou have: {player.NumberOfKey} keys.");
                 Console.WriteLine();
 
-                //Switch to check if the player have pressed W, A, S, D, or Escape. Also checks if the player can move there
-                var Input = Console.ReadKey();
-                NextPlayerStep = (char)Input.Key;
+                //Checks if the player is on a monster-tile
+                IsMonsterRoom();
 
                 switch (Input.Key)
                 {
                     case ConsoleKey.W:
-                        if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
+                        if (NextStep(player.PosRow, player.PosCol, playerInput) == false)
                             break;
                         else
-                            player.PosCol--;
-                        KeyIsPickedUp();
-                            player.NumberOfTurns++;
-                        
-                        break;
-                    case ConsoleKey.A:
-                        if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
-                            break;
-                        else
+                        {
                             player.PosRow--;
+                            ReachExit(player.PosRow, player.PosCol, playerInput);
+                            PickUpKey();
                             player.NumberOfTurns++;
-                        KeyIsPickedUp();
-                        break;
-                    case ConsoleKey.S:
-                        if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
                             break;
-                        else
-                            player.PosCol++;
-                            player.NumberOfTurns++;
-                            KeyIsPickedUp();
+                        }
 
-                        break;
-                    case ConsoleKey.D:
-                        if (NextStep(player.PosCol, player.PosRow, NextPlayerStep) == false)
+                    case ConsoleKey.S:
+                        if (NextStep(player.PosRow, player.PosCol, playerInput) == false)
                             break;
                         else
+                        {
                             player.PosRow++;
+                            PickUpKey();
                             player.NumberOfTurns++;
-                            KeyIsPickedUp();
-                        break;
-                    case ConsoleKey.Escape:
-                        IsGameRunning = false;
-                        break;
+                            ReachExit(player.PosRow, player.PosCol, playerInput);
+                            break;
+                        }
+
+                    case ConsoleKey.A:
+                        if (NextStep(player.PosRow, player.PosCol, playerInput) == false)
+                            break;
+                        else
+                        {
+                            player.PosCol--;
+                            PickUpKey();
+                            player.NumberOfTurns++;
+                            ReachExit(player.PosRow, player.PosCol, playerInput);
+                            break;
+                        }
+
+                    case ConsoleKey.D:
+                        if (NextStep(player.PosRow, player.PosCol, playerInput) == false)
+                            break;
+                        else
+                        {
+                            player.PosCol++;
+                            PickUpKey();
+                            player.NumberOfTurns++;
+                            ReachExit(player.PosRow, player.PosCol, playerInput);
+                            break;
+                        }
                     default:
                         break;
                 }
+            }
+
+            //When the player reaches the exit and exits the map loop, this message plays.
+            Console.WriteLine($"\n\n\t\t\tGOOD JOB!");
+            Console.WriteLine($"\n\n\t   TOTAL STEPS TAKEN TO REACH EXIT: {player.NumberOfTurns}");
+            if (player.NumberOfTurns > 200)
+                Console.WriteLine("\t\t\tYOU SUCK");
+            Console.ReadKey();
+        }
+
+        //Function to handle what happens when the player reaches on the exit-tile.
+        public void ReachExit(int y, int x, char keyInput)
+        {
+            if (MapGrid[y, x] is Exit)
+            {
+                Console.Clear();
+                Console.WriteLine("\n\n\n\t\tYOU REACHED THE EXIT!");
+                Console.ReadKey();
+                GameLoop = false;
+                Console.Clear();
             }
         }
         //Bool to check if the player can step on the next block
@@ -190,13 +203,21 @@ namespace Lab4_GridGame
                 (MapGrid[player.PosCol, player.PosRow + 1] is Wall && InputKey == 'D') || 
                 (MapGrid[player.PosCol, player.PosRow - 1] is Wall && InputKey == 'A') || 
                 (MapGrid[player.PosCol + 1, player.PosRow] is Wall && InputKey == 'S'))
+
+        //Function to return true or false depending on if the player is standing by a wall or locked door and is able to move or not.
+        public bool NextStep(int y, int x, char keyInput)
+        {
+            if ((MapGrid[player.PosRow - 1, player.PosCol] is Wall && keyInput == 'W') ||
+                (MapGrid[player.PosRow, player.PosCol + 1] is Wall && keyInput == 'D') ||
+                (MapGrid[player.PosRow, player.PosCol - 1] is Wall && keyInput == 'A') ||
+                (MapGrid[player.PosRow + 1, player.PosCol] is Wall && keyInput == 'S'))
             {
                 return false;
             }
-            else if (MapGrid[player.PosRow-1, player.PosCol] is Door && InputKey == 'W' ||
-                MapGrid[player.PosRow + 1, player.PosCol] is Door && InputKey == 'S' ||
-                MapGrid[player.PosRow, player.PosCol - 1] is Door && InputKey == 'A' ||
-                MapGrid[player.PosRow, player.PosCol + 1] is Door && InputKey == 'D')
+            else if (MapGrid[player.PosRow - 1, player.PosCol] is Door && keyInput == 'W' ||
+                    MapGrid[player.PosRow + 1, player.PosCol] is Door && keyInput == 'S' ||
+                    MapGrid[player.PosRow, player.PosCol - 1] is Door && keyInput == 'A' ||
+                    MapGrid[player.PosRow, player.PosCol + 1] is Door && keyInput == 'D')
             {
                 if (IsDoorOpen() == true)
                     return true;
@@ -214,23 +235,16 @@ namespace Lab4_GridGame
                 if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door1.PosRow, door1.PosCol] ||
                     MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door1.PosRow, door1.PosCol] ||
                     MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door1.PosRow, door1.PosCol] ||
-                    MapGrid[player.PosRow, player.PosCol -+1] == MapGrid[door1.PosRow, door1.PosCol])
+                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door1.PosRow, door1.PosCol])
                 {
                     door1.DoorOpen = true;
                 }
-                else if(MapGrid[player.PosRow-1, player.PosCol] == MapGrid[door2.PosRow, door2.PosCol] ||
-                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door2.PosRow, door2.PosCol] ||
-                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door2.PosRow, door2.PosCol] ||
-                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door2.PosRow, door2.PosCol])
+                else if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door2.PosRow, door2.PosCol] ||
+                        MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door2.PosRow, door2.PosCol] ||
+                        MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door2.PosRow, door2.PosCol] ||
+                        MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door2.PosRow, door2.PosCol])
                 {
                     door2.DoorOpen = true;
-                }
-                else if (MapGrid[player.PosRow - 1, player.PosCol] == MapGrid[door3.PosRow, door2.PosCol] ||
-                    MapGrid[player.PosRow + 1, player.PosCol] == MapGrid[door3.PosRow, door2.PosCol] ||
-                    MapGrid[player.PosRow, player.PosCol - 1] == MapGrid[door3.PosRow, door2.PosCol] ||
-                    MapGrid[player.PosRow, player.PosCol + 1] == MapGrid[door3.PosRow, door2.PosCol])
-                {
-                    door3.DoorOpen = true;
                 }
                 player.NumberOfKey--;
                 player.NumberOfTurns++;
@@ -260,17 +274,9 @@ namespace Lab4_GridGame
                 player.NumberOfTurns++;
                 return true;
             }
-            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2.PickedUpKey == false)
+            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2 .PickedUpKey == false)
             {
                 key2.PickedUpKey = true;
-                player.HaveKey = true;
-                player.NumberOfKey++;
-                player.NumberOfTurns++;
-                return true;
-            }
-            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key3.PosRow, key3.PosCol] && key3.PickedUpKey == false)
-            {
-                key3.PickedUpKey = true;
                 player.HaveKey = true;
                 player.NumberOfKey++;
                 player.NumberOfTurns++;
@@ -279,18 +285,18 @@ namespace Lab4_GridGame
             else
                 return false;
         }
-        // If you're walking in a monster room.
-        public void InsideMonsterRoom()
+
+        //Function that checks if player is standing in a monster room
+        public void IsMonsterRoom()
         {
-            if ((MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'W') ||
-                (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'D') ||
-                (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'A') ||
-                (MapGrid[player.PosRow, player.PosCol] is Monster && NextPlayerStep == 'S'))
+            if ((MapGrid[player.PosRow, player.PosCol] is Monster && playerInput == 'W') ||
+                    (MapGrid[player.PosRow, player.PosCol] is Monster && playerInput == 'D') ||
+                    (MapGrid[player.PosRow, player.PosCol] is Monster && playerInput == 'A') ||
+                    (MapGrid[player.PosRow, player.PosCol] is Monster && playerInput == 'S'))
             {
                 player.NumberOfTurns += 10;
+                Console.WriteLine("You enter a room and a monster attacks you. It takes a while to fight it.");
             }
         }
-
-
     }
 }
