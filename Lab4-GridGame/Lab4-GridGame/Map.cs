@@ -71,6 +71,11 @@ namespace Lab4_GridGame
                             MapGrid[row, col] = new Monster();
                             Console.Write(buffer);
                         }
+                        else if (row == 5 && col == 16)
+                        {
+                            MapGrid[row, col] = new Troll();
+                            Console.Write(buffer);
+                        }
                         else if (col == 5 && row == 5 && door1.DoorOpen == false)
                         {
                             MapGrid[row, col] = new Door();
@@ -121,7 +126,7 @@ namespace Lab4_GridGame
 
                 //Checks if the player is on a monster-tile
                 IsMonsterRoom();
-
+                TrollRoom();
                 //Switch statement to register player input and check whether or not the player is able to take a step.
                 var input = Console.ReadKey();
                 playerInput = (char)input.Key;
@@ -276,7 +281,7 @@ namespace Lab4_GridGame
                 player.NumberOfTurns++;
                 return true;
             }
-            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2.PickedUpKey == false)
+            else if (MapGrid[player.PosRow, player.PosCol] == MapGrid[key2.PosRow, key2.PosCol] && key2 .PickedUpKey == false)
             {
                 key2.PickedUpKey = true;
                 player.HaveKey = true;
@@ -298,6 +303,18 @@ namespace Lab4_GridGame
             {
                 player.NumberOfTurns += 10;
                 Console.WriteLine("You enter a room and a monster attacks you. It takes a while to fight it.");
+            }
+        }
+        public void TrollRoom()
+        {
+            if ((MapGrid[player.PosRow, player.PosCol] is Troll && playerInput == 'W')||
+                (MapGrid[player.PosRow, player.PosCol] is Troll && playerInput == 'D') ||
+                (MapGrid[player.PosRow, player.PosCol] is Troll && playerInput == 'A') ||
+                (MapGrid[player.PosRow, player.PosCol] is Troll && playerInput == 'S')
+                )
+                {
+                player.NumberOfTurns += 60;
+                Console.WriteLine("You entered a room where the Troll is, it takes you a while to fight it.");
             }
         }
     }
