@@ -10,6 +10,12 @@ namespace Lab4_GridGame
     {
         static void Main(string[] args)
         {
+            /*HIGHSCORES
+            Andreas 167        
+            
+
+             */
+
             Messages messages = new Messages();
 
             messages.PrintStartScreen();

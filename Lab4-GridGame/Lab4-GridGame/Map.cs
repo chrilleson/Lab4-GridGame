@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Lab4_GridGame
 {
-    //Level of the game
+    //the game level
     public class Map
     {
-        //X- & Y variables to set map size
+        // Max positions for the map
         public static int MaxCol = 20;
         public static int MaxRow = 10;
 
-        //Player input variable for visual representation
+        //Visual representation of the player
         public char playerInput;
 
         public bool GameLoop;
         public string buffer = " ";
 
-        //Instantiates game objects and Player for the map
+        //Instantiates game objects and the player for the map
         Block[,] MapGrid = new Block[MaxRow, MaxCol];
         public Player player = new Player();
         private Key key1 = new Key();
@@ -31,7 +31,7 @@ namespace Lab4_GridGame
         //Function that runs the games map
         public void RunGame()
         {
-            //Create map-specific variables and setting player-, key-, and door starting values
+            //Standard start values
             player.SetPlayerPos(2, 7);
             player.HaveKey = false;
             player.NumberOfKey = 0;
@@ -41,20 +41,20 @@ namespace Lab4_GridGame
             door1.DoorOpen = false;
             door2.DoorOpen = false;
 
-            //Sets key, door and exit positions on the map
+            //Sets the keys, doors, and the exit position
             key1.GetPos(4, 1);
             key2.GetPos(8, 1);
             door1.GetPos(5, 5);
             door2.GetPos(6, 15);
             exit.GetPos(8, 18);
 
-            //Update map loop based on player input
+            //Updates the map based on player input
             GameLoop = true;
             while (GameLoop != false)
             {
                 Console.Clear();
 
-                //Filling mapArray with objects based on Level Design
+                //Filling the map
                 for (int row = 0; row < MapGrid.GetLength(0); row++)
                 {
                     for (int col = 0; col < MapGrid.GetLength(1); col++)
@@ -115,19 +115,21 @@ namespace Lab4_GridGame
                     Console.WriteLine();
                 }
 
-                //Calls function that checks how many keys the Player currently has
+                //Call function that checks how many keys the player have
                 CurrentNumberOfKeys();
 
-                //Prints useful information for the player:
+                //Prints useful information for the player
                 Console.Write($"Number of keys:        {player.NumberOfKey}");
                 Console.Write($"\nNumber of steps taken: {player.NumberOfTurns}");
                 Console.Write($"\nYour previous move:    {playerInput}");
                 Console.WriteLine();
 
-                //Checks if the player is on a monster-tile
+                //Checks if the player is on a monster block
                 IsMonsterRoom();
+                //Checks if the player is on the troll block
                 TrollRoom();
-                //Switch statement to register player input and check whether or not the player is able to take a step.
+
+                //Switch that checks the player input and if the player can move there
                 var input = Console.ReadKey();
                 playerInput = (char)input.Key;
 
@@ -188,7 +190,7 @@ namespace Lab4_GridGame
                 }
             }
 
-            //When the player reaches the exit and exits the map loop, this message plays.
+            //End message
             Console.WriteLine($"\n\n\t\t\tWELL PLAYED!");
             Console.WriteLine($"\n\n\t   TOTAL STEPS TAKEN TO REACH EXIT: {player.NumberOfTurns}");
             if(player.PosCol == 16 && player.PosRow == 5)
@@ -196,7 +198,7 @@ namespace Lab4_GridGame
             Console.ReadKey();
         }
 
-        //Function to handle what happens when the player reaches on the exit-tile.
+        //Fuction that decides what happens when the player reaches the exit
         public void ReachExit(int y, int x, char keyInput)
         {
             if (MapGrid[y, x] is Exit)
@@ -211,7 +213,7 @@ namespace Lab4_GridGame
             }
         }
 
-        //Function to return true or false depending on if the player is standing by a wall or locked door and is able to move or not.
+        //Function to check if the player can move to the next block
         public bool NextStep(int y, int x, char keyInput)
         {
             if ((MapGrid[player.PosRow - 1, player.PosCol] is Wall && keyInput == 'W') ||
@@ -307,6 +309,8 @@ namespace Lab4_GridGame
                 Console.WriteLine("You enter a room and a monster attacks you. It takes a while to fight it.");
             }
         }
+
+        //Function that checks if the player is in the troll room
         public void TrollRoom()
         {
             if ((MapGrid[player.PosRow, player.PosCol] is Troll && playerInput == 'W')||

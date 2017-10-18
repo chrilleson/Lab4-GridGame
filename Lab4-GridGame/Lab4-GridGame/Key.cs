@@ -8,6 +8,7 @@ namespace Lab4_GridGame
 {
     class Key : Block, IPrint
     {
+        //Bool to check whether the player have picked up a key
         public bool PickedUpKey { get; set; }
 
         public override void GetPos(int y, int x)

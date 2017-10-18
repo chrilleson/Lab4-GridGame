@@ -8,6 +8,7 @@ namespace Lab4_GridGame
 {
     class Messages
     {
+        //Messege to the start screen
         public void PrintStartScreen()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
